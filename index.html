@@ -104,13 +104,20 @@ button{font-family:inherit; border:0; cursor:pointer; color:inherit}
 
 /* ---------- Menu ---------- */
 .menu{display:flex; gap:4%; width:100%; justify-content:center; align-items:stretch}
-.card{flex:0 1 30%; max-width:340px; aspect-ratio:1/1.05; border-radius:36px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4%;
+.card{flex:0 1 23%; max-width:300px; aspect-ratio:1/1.05; border-radius:36px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4%;
   font-size:min(6vh,4.6vw); font-weight:700; box-shadow:0 10px 0 rgba(0,0,0,.2), 0 18px 30px rgba(0,0,0,.25); transition:transform .1s}
 .card:active{transform:translateY(8px) scale(.98)}
-.card .ico{font-size:min(20vh,15vw); line-height:1}
+.card .ico{font-size:min(17vh,11vw); line-height:1}
 .card.en{background:linear-gradient(#ff9ccb,#ff6fae)}
 .card.sn{background:linear-gradient(#ffe066,#ffbf1f); color:#6b4500}
 .card.gr{background:linear-gradient(#c4b5fd,#8b5cf6)}
+.card.co{background:linear-gradient(#fdba74,#f97316)}
+
+/* ---------- Corrida ---------- */
+#run{padding:0}
+#runBoard{position:absolute; inset:0; width:100%; height:100%; touch-action:none}
+.horsebar{position:absolute; left:50%; top:62px; transform:translateX(-50%); width:min(30vw,240px); height:12px; border-radius:99px; background:rgba(0,0,0,.15); overflow:hidden; z-index:4}
+.horsebar i{display:block; height:100%; width:0; background:#ff4d8d; border-radius:99px; transition:width .2s linear}
 
 /* ---------- Guarda-roupa ---------- */
 #wardrobe{flex-direction:row; align-items:stretch; justify-content:flex-start; gap:2%; padding:72px 2% 2%}
@@ -199,8 +206,8 @@ button{font-family:inherit; border:0; cursor:pointer; color:inherit}
   .learn-left{flex-direction:row}
   .lola{width:min(24vh,40vw)}
   .word-card{width:min(78vw,52vh)}
-  .menu{flex-direction:column; align-items:center}
-  .card{flex:none; width:min(60vw,22vh); aspect-ratio:1.5/1}
+  .menu{flex-direction:row; flex-wrap:wrap; align-items:center; gap:3vw}
+  .card{flex:none; width:40vw; aspect-ratio:1/1}
   .card .ico{font-size:min(10vh,15vw)}
   #wardrobe{flex-direction:column}
   .stage{flex:0 0 46%}
@@ -243,6 +250,7 @@ button{font-family:inherit; border:0; cursor:pointer; color:inherit}
         <button class="card en" id="goLearn"><div class="ico">🗣️</div>Inglês</button>
         <button class="card sn" id="goSnake"><div class="ico">🐍</div>Cobrinha</button>
         <button class="card gr" id="goWardrobe"><div class="ico">👗</div>Guarda-roupa</button>
+        <button class="card co" id="goRun"><div class="ico">🤠</div>Corrida</button>
       </div>
     </section>
 
@@ -272,6 +280,14 @@ button{font-family:inherit; border:0; cursor:pointer; color:inherit}
       <div class="trophy">🏆</div>
       <div class="sub" id="doneTxt">Parabéns, Agnes!</div>
       <div class="row"><button class="big" id="more">Mais palavras ▶</button><button class="big alt" id="toMenu">🏠</button></div>
+    </section>
+
+    <!-- Corrida -->
+    <section class="view" id="run">
+      <canvas id="runBoard"></canvas>
+      <div class="score" id="runScore">⭐ 0</div>
+      <div class="horsebar"><i id="runHorse"></i></div>
+      <div class="overlay" id="runMsg"><div class="msg">🤠 Toca na tela<br>para pular!</div></div>
     </section>
 
     <!-- Guarda-roupa -->
@@ -488,7 +504,7 @@ async function say(id){
 function sfx(type){
   const o = AC.createOscillator(), g = AC.createGain(), t = AC.currentTime;
   o.connect(g); g.connect(master);
-  const notes = type === "win" ? [523, 659, 784, 1046] : type === "eat" ? [660, 990] : [300, 200];
+  const notes = type === "win" ? [523, 659, 784, 1046] : type === "eat" ? [660, 990] : type === "jump" ? [392, 587] : [300, 200];
   notes.forEach((f, i) => o.frequency.setValueAtTime(f, t + i*.09));
   o.type = "triangle"; g.gain.setValueAtTime(.18, t); g.gain.exponentialRampToValueAtTime(.001, t + notes.length*.09 + .15);
   o.start(t); o.stop(t + notes.length*.09 + .2);
@@ -507,7 +523,7 @@ const shuffle = a => { a = a.slice(); for (let i = a.length-1; i > 0; i--){ cons
 
 /* ---------- Telas ---------- */
 function show(id){
-  session++; stopAudio(); stopListening(); stopSnake();
+  session++; stopAudio(); stopListening(); stopSnake(); if (window.stopRun) stopRun();
   document.querySelectorAll(".view").forEach(v => v.classList.toggle("on", v.id === id));
   $("#volPanel").classList.remove("on");
   $("#homebtn").style.display = (id === "start" || id === "menu") ? "none" : "block";
@@ -835,6 +851,7 @@ function openParents(){
       <div class="tile"><b>${fmtMin(hoje.min)}</b><span>Tempo hoje</span></div>
       <div class="tile"><b>${fmtMin(minSemana)}</b><span>Últimos 7 dias</span></div>
       <div class="tile"><b>${stars}</b><span>Estrelinhas</span></div>
+      <div class="tile"><b>${(stats.corrida || {}).recorde || 0}</b><span>Recorde de estrelas na corrida (${(stats.corrida || {}).partidas || 0} corridas)</span></div>
       <div class="tile"><b>${stats.roupas || 0}</b><span>Roupas trocadas no guarda-roupa</span></div>
       <div class="tile"><b>${stats.snake.recorde}</b><span>Recorde na cobrinha (${stats.snake.partidas} partidas)</span></div>
     </div>
@@ -881,5 +898,6 @@ fetch("content.json").then(r => r.json()).then(c => {
 });
 </script>
 <script src="guarda-roupa.js"></script>
+<script src="corrida.js"></script>
 </body>
 </html>

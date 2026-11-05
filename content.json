@@ -404,7 +404,11 @@
     "dress_wow2": "Que chique, Agnes!",
     "dress_wow3": "Que roupa bonita! Adorei!",
     "dress_clean": "Pronto, tirou tudo! Vamos escolher de novo?",
-    "dress_photo": "Xis! Que foto linda!"
+    "dress_photo": "Xis! Que foto linda!",
+    "run_in": "Vamos correr, Agnes! Toca na tela para pular!",
+    "run_horse": "Upa, cavalinho! Corre, Pipoca!",
+    "run_ops": "Opa! Tropeçou! Continua correndo!",
+    "run_wow": "Uau, que corrida! Você é muito rápida!"
   },
   "snakeFoods": [
     "apple",
@@ -488,6 +492,10 @@
     {
       "id": "icecream",
       "en": "ice cream"
+    },
+    {
+      "id": "jump",
+      "en": "jump"
     }
   ]
 }

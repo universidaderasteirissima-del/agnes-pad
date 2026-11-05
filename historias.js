@@ -113,9 +113,11 @@ const colina = `<rect width="200" height="140" fill="#cfe3e6"/><circle cx="160" 
 const folhas = (cor) => `<path d="M10 50 Q30 6 70 10 Q60 50 10 50Z" fill="${cor}"/><path d="M12 48 Q40 30 66 12" stroke="#2f4a22" stroke-width="2" fill="none"/>`;
 const estrelas = () => Array.from({length: 26}, (_, i) => `<i style="left:${(i*37) % 100}%;top:${(i*53) % 62}%;animation-delay:${(i % 7)*.4}s;transform:scale(${.5 + (i % 4)*.25})"></i>`).join("");
 
+const botoesFim = prox => `<div class="botoes"><button class="fim">Boa noite 🌙</button>${prox ? `<button class="prox" data-prox="${prox}">${prox === "sobrinho2" ? "Capítulo 2" : "Capítulo 3"} →</button>` : ""}</div>`;
+
 /* ---------- O Sobrinho do Mago · Capítulo 1: A porta errada ---------- */
 const CAP1 = {
-  id: "sobrinho1", livro: "As Crônicas de Nárnia", titulo: "O Sobrinho do Mago", capitulo: "Capítulo 1 · A porta errada",
+  id: "sobrinho1", livro: "As Crônicas de Nárnia", titulo: "O Sobrinho do Mago", capitulo: "Capítulo 1 · A porta errada", curto: "A porta errada",
   paginas: [
   { /* 1 · capa */
     tema: "noite", layout: "capa",
@@ -236,10 +238,238 @@ const CAP1 = {
       <p>Eles faziam um zumbido baixinho — zzzzz — como uma abelha lá longe. Eram tão bonitos que Polly sentiu uma vontade enorme de tocar num deles...</p>
       <p>Foi então que a poltrona se mexeu. Alguém estava sentado ali o tempo todo! E uma voz disse:<br><b>— Ora, ora... visitas!</b></p>
       <div class="continua">Continua no próximo capítulo... <span>toque nos anéis ✨</span></div>
-      <button class="fim">Boa noite 🌙</button>`
+      ${botoesFim("sobrinho2")}`
   }]
 };
-const HISTORIAS = [CAP1];
+
+/* ---------- desenhos dos capítulos 2 e 3 ---------- */
+const tioAndre = `<path d="M30 96 Q16 150 24 198" stroke="#3a2a4a" stroke-width="17" fill="none" stroke-linecap="round"/><path d="M90 96 Q104 150 96 198" stroke="#3a2a4a" stroke-width="17" fill="none" stroke-linecap="round"/>
+  <circle cx="24" cy="202" r="8" fill="#f0d2b4"/><circle cx="96" cy="202" r="8" fill="#f0d2b4"/>
+  <rect x="44" y="236" width="13" height="34" fill="#1e1a22"/><rect x="63" y="236" width="13" height="34" fill="#1e1a22"/><ellipse cx="48" cy="272" rx="11" ry="5" fill="#111"/><ellipse cx="72" cy="272" rx="11" ry="5" fill="#111"/>
+  <path d="M30 92 Q60 80 90 92 L100 242 L20 242Z" fill="#3a2a4a"/><path d="M48 90 L60 150 L72 90Z" fill="#f2ece0"/><path d="M54 96 L66 96 L63 114 L57 114Z" fill="#9c2f2a"/>
+  <path d="M48 90 L60 150 L40 236" stroke="#2a1d36" stroke-width="3" fill="none"/><path d="M72 90 L60 150 L80 236" stroke="#2a1d36" stroke-width="3" fill="none"/>
+  <circle cx="52" cy="170" r="3" fill="#c9a24a"/><circle cx="52" cy="190" r="3" fill="#c9a24a"/>
+  <rect x="54" y="70" width="12" height="20" fill="#e8c4a4"/><ellipse cx="60" cy="52" rx="18" ry="24" fill="#f0d2b4"/>
+  <path d="M40 54 Q28 34 40 24 Q36 8 52 14 Q56 0 67 9 Q80 2 81 18 Q95 20 86 36 Q96 46 80 56 Q82 36 70 31 Q60 27 50 31 Q41 36 40 54Z" fill="#ece7dc" stroke="#b9b2a6" stroke-width="1.5"/>
+  <path d="M40 54 Q30 58 34 66 M80 56 Q90 60 86 68" stroke="#ece7dc" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <circle cx="53" cy="50" r="2.3" fill="#222"/><circle cx="67" cy="50" r="2.3" fill="#222"/><path d="M47 44 l10 -3 M63 41 l10 3" stroke="#8a8378" stroke-width="2"/>
+  <path d="M60 50 L68 64 L59 65Z" fill="#e2b08e"/><path d="M52 70 Q60 75 68 70" stroke="#8a4a3a" stroke-width="2" fill="none"/>`;
+const chave = `<circle cx="20" cy="20" r="13" fill="none" stroke="#d9b25a" stroke-width="6"/><rect x="31" y="17" width="54" height="6" fill="#d9b25a"/><rect x="70" y="23" width="6" height="12" fill="#d9b25a"/><rect x="80" y="23" width="5" height="8" fill="#d9b25a"/>`;
+const caixaAtl = `<defs><radialGradient id="cxg"><stop offset="0" stop-color="#fff2b0"/><stop offset="1" stop-color="#ffd76a" stop-opacity="0"/></radialGradient></defs>
+  <ellipse class="halo" cx="80" cy="40" rx="76" ry="44" fill="url(#cxg)"/>
+  <path d="M20 50 L32 18 L128 18 L140 50Z" fill="#6b3f1c"/><path d="M32 18 L128 18 L122 30 L38 30Z" fill="#c9a24a"/>
+  <rect x="18" y="50" width="124" height="62" rx="6" fill="#8a5a2a"/><rect x="18" y="50" width="124" height="10" fill="#c9a24a"/>
+  <path d="M36 72 q44 34 88 0" stroke="#c9a24a" stroke-width="4" fill="none"/><circle cx="80" cy="84" r="7" fill="#c9a24a"/><circle cx="80" cy="84" r="3" fill="#6b3f1c"/>
+  <path d="M24 104 h112" stroke="#c9a24a" stroke-width="3"/>
+  ${[[60, 10], [92, 4], [110, 14], [74, 0], [48, 16]].map(([x, y], k) => `<circle class="po" style="animation-delay:${k*.3}s" cx="${x}" cy="${y}" r="3" fill="#fff6c8"/>`).join("")}`;
+const madrinha = `<ellipse cx="50" cy="65" rx="47" ry="61" fill="#c9a24a"/><ellipse cx="50" cy="65" rx="40" ry="53" fill="#efe2c4"/>
+  <path d="M38 112 L39 97 Q29 93 33 82 Q29 78 33 73 L29 67 Q33 63 33 57 Q33 35 51 31 Q55 20 66 24 Q76 26 72 36 Q78 48 71 61 Q67 77 61 82 L63 97 Q75 101 77 112Z" fill="#3a2a2a"/>`;
+const diagrama = `<circle cx="60" cy="88" r="48" fill="#6a8fc0"/><circle cx="240" cy="88" r="48" fill="#6fae5e"/>
+  <text x="60" y="84" text-anchor="middle" font-family="IM Fell English, serif" font-size="17" fill="#fff">nosso</text><text x="60" y="104" text-anchor="middle" font-family="IM Fell English, serif" font-size="17" fill="#fff">mundo</text>
+  <text x="240" y="84" text-anchor="middle" font-family="IM Fell English, serif" font-size="17" fill="#fff">outro</text><text x="240" y="104" text-anchor="middle" font-family="IM Fell English, serif" font-size="17" fill="#fff">lugar</text>
+  <path d="M96 52 Q150 6 204 52" stroke="#e8b923" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M204 52 l-18 -4 l8 -12Z" fill="#e8b923"/>
+  <path d="M204 124 Q150 170 96 124" stroke="#2f9e58" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="2 12"/><path d="M96 124 l18 4 l-8 12Z" fill="#2f9e58"/>
+  <text x="150" y="22" text-anchor="middle" font-family="IM Fell English, serif" font-size="15" fill="#8a6a10">amarelo: vai</text>
+  <text x="150" y="172" text-anchor="middle" font-family="IM Fell English, serif" font-size="15" fill="#1f6a3a">verde: volta?</text>`;
+const laguinho = `<defs><linearGradient id="lgg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe6e0"/><stop offset=".5" stop-color="#5fa6a0"/><stop offset="1" stop-color="#2a5a4e"/></linearGradient></defs>
+  <ellipse cx="100" cy="46" rx="98" ry="32" fill="#3f6a34"/><ellipse cx="100" cy="42" rx="90" ry="27" fill="url(#lgg)"/>
+  <ellipse class="onda" cx="100" cy="42" rx="40" ry="11" fill="none" stroke="#e8fff8" stroke-width="2" opacity=".7"/>
+  <path d="M40 34 q30 -8 60 0" stroke="#fff" stroke-width="3" opacity=".55" fill="none"/>`;
+const tufo = `<path d="M10 48 Q14 20 20 48 Q24 10 32 48 Q36 18 44 48 Q50 4 56 48 Q62 22 68 48 Q74 12 80 48 Q86 26 92 48Z" fill="#4f8a3a"/><rect x="6" y="46" width="90" height="6" rx="3" fill="#6b4a2a"/>`;
+const arvore = `<path d="M50 200 L56 90 Q30 80 22 60 Q40 70 56 72 L58 40 Q40 30 38 10 Q52 26 62 30 Q70 14 86 8 Q76 26 70 40 L68 92 Q86 80 100 82 Q84 90 72 104 L78 200Z" fill="#3a2a1a"/>`;
+const reflexoSala = `<rect width="200" height="120" fill="#2a1a12"/><rect x="10" y="10" width="60" height="100" fill="#4a2e1b"/>${[0, 1, 2, 3].map(r => `<rect x="10" y="${30 + r*22}" width="60" height="4" fill="#2e1c10"/>`).join("")}
+  <rect x="90" y="40" width="60" height="60" fill="#8a7663"/><rect x="102" y="58" width="36" height="42" rx="16" fill="#1e140e"/><path d="M110 100 Q114 80 120 72 Q126 84 130 100Z" fill="#ffb53b" class="fogo"/>`;
+const bolhas = () => `<div class="bolhas">${Array.from({length: 14}, (_, i) => `<i style="left:${(i*29) % 100}%;animation-delay:${(i % 7)*.45}s;width:calc(var(--u)*${1.6 + (i % 4)*.9});height:calc(var(--u)*${1.6 + (i % 4)*.9})"></i>`).join("")}</div>`;
+const raios = `<div class="raios"></div>`;
+
+/* ---------- Capítulo 2: Digory e o tio ---------- */
+const CAP2 = {
+  id: "sobrinho2", livro: "As Crônicas de Nárnia", titulo: "O Sobrinho do Mago", capitulo: "Capítulo 2 · Digory e o tio", curto: "Digory e o tio",
+  paginas: [
+  { tema: "noite", layout: "capa",
+    cena: `<div class="ceu">${estrelas()}</div>` +
+      svg("0 0 120 180", porta, {x: 8, y: 14, w: 40, e: "pop", t: .0, d: 1, z: 1, c: "porta"}) +
+      svg("0 0 120 280", tioAndre, {x: 40, y: 10, w: 36, e: "subir", t: .25, d: 3, z: 3}) +
+      svg("0 0 90 40", chave, {x: 70, y: 70, w: 18, r: -20, e: "zoom", t: .5, d: 4, z: 4, c: "brilha"}),
+    texto: `<div class="sobre">As Crônicas de Nárnia</div><h1>O Sobrinho<br>do Mago</h1><div class="cap">Capítulo 2 · Digory e o tio</div>
+      <p>Lembra? Polly e Digory contaram as vigas errado e entraram, sem querer, na sala secreta do tio André.</p>
+      <p>E alguém estava sentado na poltrona o tempo todo...</p>
+      <div class="dica">role devagarinho para baixo ↓</div>` },
+  { tema: "sala",
+    cena: svg("0 0 300 300", estante(), {x: 0, y: 0, w: 34, e: "esq", t: .0, d: 1, s: "height:100%", c: "fundo-cena"}) +
+      svg("0 0 140 160", poltrona, {x: 70, y: 46, w: 28, e: "dir", t: .1, d: 1, z: 1}) +
+      svg("0 0 120 280", tioAndre, {x: 38, y: 4, w: 34, e: "subir", t: .2, d: 3, z: 3}) +
+      svg("0 0 90 40", chave, {x: 8, y: 70, w: 18, r: 15, e: "cair", t: .5, d: 4, z: 4}) +
+      tag("clic!", {x: 6, y: 58, w: 16, r: -8, e: "zoom", t: .6, z: 6, c: "fala"}),
+    texto: `<p>Da poltrona levantou-se um homem alto, muito magro, com um nariz comprido e o cabelo branco todo arrepiado, como se nunca tivesse visto um pente.</p>
+      <p>Era o <b>tio André</b>. Sem dizer nada, ele foi até a porta, girou a chave — <i>clic!</i> — e guardou a chave no bolso.</p>
+      <p>Agora ninguém podia sair.</p>` },
+  { tema: "sala",
+    cena: svg("0 0 400 230", bandeja, {x: 2, y: 54, w: 60, e: "pop", t: .0, d: 2, z: 2}) +
+      [[8, 58, "a"], [20, 56, "v"], [32, 57, "a"], [44, 60, "v"]].map(([x, y, c], i) => svg("0 0 100 100", c === "a" ? anel("#f2c230", "#a97a10", "b" + i) : anel("#3fbf6a", "#1d7a3e", "b" + i), {x, y, w: 12, e: "zoom", t: .2 + i*.05, d: 3, z: 3, c: "anel"})).join("") +
+      svg("0 0 120 280", tioAndre, {x: 60, y: 4, w: 32, e: "dir", t: .1, d: 3, z: 3}) +
+      img("polly-digory", {x: 4, y: 0, w: 32, r: -2, e: "pop", t: .3, d: 4, z: 4}) +
+      tag("— Que anel bonito...", {x: 40, y: 2, w: 34, r: 4, e: "zoom", t: .55, z: 6, c: "fala"}) +
+      tag("— Polly, não!", {x: 34, y: 86, w: 28, r: -4, e: "zoom", t: .7, z: 6, c: "fala"}),
+    texto: `<p>— Que bom! — disse o tio André, esfregando as mãos. — Eu estava mesmo precisando de duas crianças...</p>
+      <p>Ele sorriu, mostrou a bandeja e disse, bem docinho:<br>— Gostou dos anéis, menina? Pode pegar um amarelo para você.</p>
+      <p>— Polly, não! — gritou Digory. Mas já era tarde demais...</p>` },
+  { tema: "sala",
+    cena: svg("0 0 120 280", tioAndre, {x: 62, y: 6, w: 30, e: "dir", t: .0, d: 2, z: 2}) +
+      img("polly-digory", {x: 6, y: 2, w: 36, r: -2, e: "sumir", t: .25, d: 3, z: 3}) +
+      peca(`<div class="estrelinhas">${Array.from({length: 12}, (_, i) => `<i style="left:${(i*37) % 90}%;top:${(i*53) % 90}%;animation-delay:${(i % 6)*.25}s"></i>`).join("")}</div>`, {x: 4, y: 4, w: 40, e: "fade", t: .45, z: 5, s: "height:70%"}) +
+      svg("0 0 100 100", anel("#f2c230", "#a97a10", "s1"), {x: 18, y: 72, w: 14, e: "zoom", t: .6, d: 4, z: 4, c: "anel"}) +
+      tag("puf!", {x: 34, y: 40, w: 16, r: 8, e: "zoom", t: .55, z: 6, c: "numero"}),
+    texto: `<p>Assim que a pontinha do dedo de Polly encostou no anel amarelo... ela sumiu!</p>
+      <p>Sem barulho, sem fumaça, sem nada. Num instante Polly estava ali; no outro, a sala estava vazia.</p>
+      <p>Digory ficou paralisado de susto. E o tio André? Ele estava todo contente.</p>` },
+  { tema: "papel",
+    cena: img("porquinho", {x: 6, y: 6, w: 44, r: -3, e: "pop", t: .0, d: 2, z: 2}) +
+      svg("0 0 100 100", anel("#f2c230", "#a97a10", "p1"), {x: 30, y: 68, w: 14, e: "zoom", t: .3, d: 4, z: 4, c: "anel"}) +
+      svg("0 0 100 110", gaiola, {x: 62, y: 10, w: 24, e: "cair", t: .2, d: 3, z: 3}) +
+      tag("gaiola vazia...", {x: 58, y: 54, w: 32, r: 4, e: "cair", t: .45, z: 5}) +
+      tag("experiência nº 1", {x: 10, y: 86, w: 36, r: -3, e: "esq", t: .6, z: 5, c: "placa"}),
+    texto: `<p>— Funcionou! — disse ele. — Igualzinho ao porquinho-da-índia!</p>
+      <p>O tio André contou que tinha testado primeiro no porquinho, aquele da gaiola. O bichinho tocou no anel amarelo e — puf! — desapareceu também.</p>
+      <p>— Mas para onde eles foram? — perguntou Digory, com o coração disparado.</p>` },
+  { tema: "sepia",
+    cena: svg("0 0 100 130", madrinha, {x: 6, y: 4, w: 26, r: -4, e: "pop", t: .0, d: 2, z: 2}) +
+      tag("a madrinha, Sra. Lefay", {x: 2, y: 46, w: 40, r: 3, e: "cair", t: .2, z: 5}) +
+      svg("0 0 160 120", caixaAtl, {x: 42, y: 36, w: 52, e: "pop", t: .3, d: 3, z: 3}) +
+      tag("Atlântida", {x: 60, y: 82, w: 24, r: -4, e: "zoom", t: .55, z: 5, c: "placa"}),
+    texto: `<p>Então o tio André contou um segredo. Ele tinha uma madrinha muito estranha, a <b>Sra. Lefay</b>. Diziam que ela era uma das últimas pessoas com sangue de fada.</p>
+      <p>Antes de morrer, ela deixou para ele uma caixinha antiga, que tinha vindo de <b>Atlântida</b>, uma ilha encantada que afundou no mar há milhares de anos.</p>
+      <p>Dentro dela havia um pó brilhante... um pó de outro mundo.</p>` },
+  { tema: "papel",
+    cena: svg("0 0 300 180", diagrama, {x: 2, y: 8, w: 96, e: "pop", t: .0, d: 2, z: 2}) +
+      svg("0 0 100 100", anel("#f2c230", "#a97a10", "d1"), {x: 4, y: 70, w: 16, e: "zoom", t: .35, d: 4, z: 4, c: "anel"}) +
+      svg("0 0 100 100", anel("#3fbf6a", "#1d7a3e", "d2"), {x: 78, y: 70, w: 16, e: "zoom", t: .45, d: 4, z: 4, c: "anel"}) +
+      tag("anéis mágicos", {x: 32, y: 78, w: 34, r: -2, e: "cair", t: .55, z: 5, c: "placa"}),
+    texto: `<p>Com esse pó, o tio André fez os anéis.</p>
+      <p>— Quem toca num anel <b class="am">amarelo</b> é puxado para fora do nosso mundo, para um outro lugar — explicou. — E os anéis <b class="vd">verdes</b>, eu acho, trazem a pessoa de volta.</p>
+      <p>— O senhor <i>acha</i>? — disse Digory. — E a Polly não levou nenhum anel verde! Ela não consegue voltar!</p>` },
+  { tema: "sala",
+    cena: svg("0 0 120 280", tioAndre, {x: 52, y: 4, w: 34, e: "dir", t: .0, d: 2, z: 2}) +
+      img("digory", {x: 6, y: 16, w: 30, r: -3, e: "pop", t: .15, d: 3, z: 3}) +
+      tag("— Eu? Ir lá? Nem pensar!", {x: 46, y: 2, w: 50, r: 3, e: "zoom", t: .35, z: 6, c: "fala"}) +
+      tag("— O senhor é um covarde!", {x: 2, y: 82, w: 50, r: -3, e: "zoom", t: .55, z: 6, c: "fala"}),
+    texto: `<p>— Alguém precisa levar dois anéis verdes até ela: um para ela e um para voltar — disse o tio André. — Eu é que não vou! Sou velho demais e importante demais.</p>
+      <p>— O senhor é um covarde! — gritou Digory, vermelho de raiva. — Mandar uma menina para um lugar que nem conhece!</p>
+      <p>O tio só deu de ombros. Ele sabia que Digory nunca deixaria a amiga sozinha.</p>` },
+  { tema: "sepia",
+    cena: img("digory", {x: 8, y: 10, w: 32, r: -2, e: "pop", t: .0, d: 3, z: 3}) +
+      svg("0 0 100 100", coracao, {x: 46, y: 8, w: 14, r: 6, e: "zoom", t: .2, d: 4, z: 4, c: "pulsa"}) +
+      tag("pela Polly", {x: 58, y: 12, w: 26, r: -3, e: "cair", t: .3, z: 5}) +
+      svg("0 0 100 100", anel("#3fbf6a", "#1d7a3e", "e1"), {x: 52, y: 44, w: 14, e: "zoom", t: .4, d: 4, z: 4, c: "anel"}) +
+      svg("0 0 100 100", anel("#3fbf6a", "#1d7a3e", "e2"), {x: 64, y: 48, w: 14, e: "zoom", t: .46, d: 4, z: 4, c: "anel"}) +
+      tag("2 verdes no bolso direito", {x: 44, y: 66, w: 52, r: 2, e: "cair", t: .55, z: 5, c: "placa"}) +
+      svg("0 0 100 100", anel("#f2c230", "#a97a10", "e3"), {x: 40, y: 80, w: 14, e: "zoom", t: .65, d: 4, z: 4, c: "anel"}),
+    texto: `<p>Digory respirou fundo. Ele estava com medo, mas a Polly era sua amiga.</p>
+      <p>Guardou com muito cuidado os <b class="vd">dois anéis verdes</b> no bolso direito da calça — um para ele e outro para a Polly.</p>
+      <p>— Lembre-se: o verde fica no bolso direito — disse o tio, sorrindo. — Agora, é só pegar o amarelo.</p>` },
+  { tema: "magia", final: true,
+    cena: `<div class="redemoinho"></div>` +
+      img("digory", {x: 22, y: 12, w: 30, r: 0, e: "sumir", t: .3, d: 3, z: 3}) +
+      svg("0 0 100 100", anel("#f2c230", "#a97a10", "f1"), {x: 30, y: 70, w: 16, e: "zoom", t: .1, d: 4, z: 4, c: "anel toca amarelo"}) +
+      svg("0 0 100 100", anel("#3fbf6a", "#1d7a3e", "f2"), {x: 50, y: 74, w: 14, e: "zoom", t: .15, d: 4, z: 4, c: "anel toca verde"}),
+    texto: `<p>Digory estendeu a mão e encostou no anel amarelo.</p>
+      <p>Na mesma hora, a sala do tio André começou a se apagar, como um desenho borrado pela chuva. As estantes, a lareira, o tio... tudo foi sumindo.</p>
+      <p>E então, tudo ficou escuro.</p>
+      <div class="continua">Continua no próximo capítulo... <span>toque nos anéis ✨</span></div>
+      ${botoesFim("sobrinho3")}` }]
+};
+
+/* ---------- Capítulo 3: O Bosque entre os Mundos ---------- */
+const CAP3 = {
+  id: "sobrinho3", livro: "As Crônicas de Nárnia", titulo: "O Sobrinho do Mago", capitulo: "Capítulo 3 · O Bosque entre os Mundos", curto: "O Bosque entre os Mundos",
+  paginas: [
+  { tema: "bosque", layout: "capa",
+    cena: raios + img("bosque", {x: 6, y: 2, w: 54, r: -2, e: "pop", t: .0, d: 1, z: 1}) +
+      svg("0 0 200 80", laguinho, {x: 30, y: 70, w: 60, e: "pop", t: .25, d: 3, z: 3}) +
+      svg("0 0 100 100", anel("#f2c230", "#a97a10", "g1"), {x: 68, y: 40, w: 14, e: "zoom", t: .45, d: 4, z: 4, c: "anel"}) +
+      svg("0 0 100 100", anel("#3fbf6a", "#1d7a3e", "g2"), {x: 78, y: 48, w: 13, e: "zoom", t: .52, d: 4, z: 4, c: "anel"}),
+    texto: `<div class="sobre">As Crônicas de Nárnia</div><h1>O Sobrinho<br>do Mago</h1><div class="cap">Capítulo 3 · O Bosque entre os Mundos</div>
+      <p>Digory tocou no anel amarelo e tudo ficou escuro... Para onde será que ele foi?</p>
+      <div class="dica">role devagarinho para baixo ↓</div>` },
+  { tema: "agua",
+    cena: bolhas() + img("digory", {x: 30, y: 16, w: 30, r: -4, e: "subir", t: .1, d: 4, z: 3}) +
+      peca(`<div class="luz-cima"></div>`, {x: 0, y: 0, w: 100, e: "fade", t: .3, z: 1, s: "height:40%"}),
+    texto: `<p>Primeiro, Digory sentiu que estava subindo, subindo, como uma bolha dentro da água.</p>
+      <p>Lá em cima apareceu uma luz verde, cada vez mais clara... até que — <i>splash!</i> — a cabeça dele saiu para fora de um laguinho.</p>
+      <p>E o mais curioso: quando ele subiu na margem, estava completamente seco!</p>` },
+  { tema: "bosque",
+    cena: raios + img("bosque", {x: 2, y: 0, w: 60, r: 2, e: "pop", t: .0, d: 1, z: 1}) +
+      img("digory", {x: 60, y: 40, w: 26, r: -2, e: "dir", t: .3, d: 4, z: 4}) +
+      tag("shhh...", {x: 62, y: 20, w: 22, r: 5, e: "zoom", t: .5, z: 6, c: "fala"}),
+    texto: `<p>Ele estava num bosque. Mas não era um bosque qualquer: era o lugar mais quietinho do mundo.</p>
+      <p>Não tinha passarinho, nem vento, nem bicho nenhum. As árvores eram altas e cheias de folhas, e a luz chegava verde e dourada lá de cima.</p>
+      <p>Era tão calmo que quase dava para ouvir as árvores crescendo.</p>` },
+  { tema: "bosque",
+    cena: svg("0 0 100 200", arvore, {x: 0, y: 0, w: 22, e: "esq", t: .0, d: 1, z: 1}) +
+      svg("0 0 100 200", arvore, {x: 80, y: 2, w: 20, e: "dir", t: .05, d: 1, z: 1}) +
+      [[18, 14, 40], [56, 22, 34], [10, 48, 36], [48, 52, 44], [26, 78, 40], [66, 80, 32]].map(([x, y, w], i) =>
+        svg("0 0 200 80", laguinho, {x, y, w, e: "pop", t: .1 + i*.07, d: 2 + (i % 3), z: 2})).join("") +
+      tag("um laguinho... dois... três...", {x: 30, y: 2, w: 60, r: -2, e: "cair", t: .6, z: 6}),
+    texto: `<p>E por todo lado havia <b>laguinhos</b>. Dezenas, centenas de laguinhos redondos, a poucos passos uns dos outros, com a água parada brilhando entre as raízes.</p>
+      <p>Digory olhou em volta, devagar. Ele estava se sentindo tão bem, tão sonolento...</p>` },
+  { tema: "bosque",
+    cena: svg("0 0 100 200", arvore, {x: 10, y: 0, w: 34, e: "pop", t: .0, d: 1, z: 1}) +
+      img("polly-cadeira", {x: 20, y: 20, w: 30, r: 0, e: "pop", t: .2, d: 3, z: 3}) +
+      peca(`<span>z</span><span>z</span><span>z</span>`, {x: 40, y: 10, w: 24, e: "fade", t: .4, z: 5, c: "zumbido"}) +
+      img("digory", {x: 64, y: 30, w: 24, r: 2, e: "dir", t: .45, d: 4, z: 4}) +
+      tag("— Acho que já te vi antes...", {x: 40, y: 82, w: 56, r: 2, e: "zoom", t: .6, z: 6, c: "fala"}),
+    texto: `<p>Perto de uma árvore estava uma menina, meio acordada, meio dormindo.</p>
+      <p>— Acho que eu já te vi antes — disse ela, bem devagarinho.<br>— Eu também acho — respondeu Digory. — Você está aqui faz muito tempo?</p>
+      <p>— Ah, desde sempre... — disse ela. Naquele bosque, ninguém conseguia lembrar direito de nada.</p>` },
+  { tema: "bosque",
+    cena: img("porquinho", {x: 8, y: 30, w: 36, r: -4, e: "esq", t: .1, d: 3, z: 3}) +
+      svg("0 0 100 100", anel("#f2c230", "#a97a10", "h1"), {x: 20, y: 72, w: 14, e: "zoom", t: .3, d: 4, z: 4, c: "anel"}) +
+      img("polly-digory", {x: 56, y: 6, w: 38, r: 2, e: "pop", t: .4, d: 3, z: 3}) +
+      tag("— O tio André!", {x: 6, y: 6, w: 36, r: -4, e: "zoom", t: .6, z: 6, c: "fala"}),
+    texto: `<p>De repente, passou correndo entre as árvores um bichinho gorducho... com um anel amarelo amarrado no corpo!</p>
+      <p>— O porquinho-da-índia! — gritaram os dois ao mesmo tempo.</p>
+      <p>E então eles se lembraram de tudo: a sala secreta, a bandeja, os anéis... — O tio André! — disse Polly. — Você é o Digory!</p>` },
+  { tema: "sepia",
+    cena: svg("0 0 400 240", vigas(), {x: 2, y: 2, w: 54, e: "esq", t: .0, d: 2, z: 2, c: "moldura"}) +
+      tag("o túnel do sótão", {x: 6, y: 34, w: 40, r: -3, e: "cair", t: .2, z: 5}) +
+      ["", "", ""].map((_, i) => svg("0 0 200 80", laguinho, {x: 48 + i*14, y: 50 + (i % 2)*10, w: 26, e: "pop", t: .3 + i*.07, d: 3, z: 3})).join("") +
+      tag("o bosque", {x: 56, y: 80, w: 28, r: 3, e: "cair", t: .55, z: 5}) +
+      tag("=", {x: 40, y: 40, w: 10, r: 0, e: "zoom", t: .65, z: 6, c: "numero"}),
+    texto: `<p>Digory pensou um pouco e teve uma ideia:</p>
+      <p>— Sabe o túnel do sótão? Ele não é parte de nenhuma casa, mas dele dá para entrar em todas as casas da fileira.</p>
+      <p>— Este bosque é igual! Ele é um <b>lugar no meio</b>. E cada laguinho é uma porta para um mundo diferente!</p>` },
+  { tema: "bosque",
+    cena: svg("0 0 200 80", laguinho, {x: 10, y: 36, w: 64, e: "pop", t: .0, d: 2, z: 2}) +
+      svg("0 0 100 50", tufo, {x: 56, y: 26, w: 26, r: 6, e: "cair", t: .3, d: 4, z: 4}) +
+      img("digory", {x: 70, y: 22, w: 24, r: 2, e: "dir", t: .2, d: 3, z: 3}) +
+      tag("o nosso laguinho", {x: 14, y: 74, w: 42, r: -3, e: "cair", t: .5, z: 5, c: "placa"}),
+    texto: `<p>— Mas então precisamos marcar o nosso laguinho — disse Polly. — Senão, como vamos achar o caminho de casa?</p>
+      <p>Digory pegou seu canivete e cortou um pedacinho de grama da beirada, para lembrar direitinho qual era o laguinho que levava de volta a Londres.</p>
+      <p>Que bom que eles pensaram nisso!</p>` },
+  { tema: "agua",
+    cena: svg("0 0 200 120", reflexoSala, {x: 10, y: 16, w: 62, e: "fade", t: .0, d: 1, z: 1, c: "reflexo"}) +
+      svg("0 0 200 80", laguinho, {x: 4, y: 52, w: 74, e: "pop", t: .1, d: 2, z: 2}) +
+      img("polly-digory", {x: 62, y: 4, w: 34, r: 3, e: "subir", t: .3, d: 4, z: 4}) +
+      svg("0 0 100 100", anel("#3fbf6a", "#1d7a3e", "j1"), {x: 4, y: 82, w: 14, e: "zoom", t: .5, d: 4, z: 4, c: "anel"}) +
+      tag("é a sala do tio!", {x: 22, y: 2, w: 36, r: -2, e: "cair", t: .55, z: 6, c: "placa"}),
+    texto: `<p>Antes de explorar, eles quiseram testar os anéis verdes. Colocaram o anel, deram as mãos e pularam no laguinho de casa.</p>
+      <p>Lá embaixo começou a aparecer, borrada, a sala do tio André... Na mesma hora, eles trocaram para o amarelo e voltaram para o bosque!</p>
+      <p>— Funciona! — disse Digory. — O <b class="am">amarelo</b> traz a gente para o bosque, e o <b class="vd">verde</b> leva para fora daqui.</p>` },
+  { tema: "magia", final: true,
+    cena: raios + [[4, 40, 40], [50, 54, 44]].map(([x, y, w], i) => svg("0 0 200 80", laguinho, {x, y, w, e: "pop", t: .05 + i*.08, d: 2, z: 2})).join("") +
+      img("polly-correndo", {x: 22, y: 6, w: 24, r: -4, e: "subir", t: .3, d: 4, z: 4}) +
+      img("digory-correndo", {x: 46, y: 2, w: 28, r: 3, e: "subir", t: .36, d: 4, z: 4}) +
+      tag("um... dois... três... JÁ!", {x: 12, y: 84, w: 60, r: -2, e: "zoom", t: .6, z: 6, c: "fala"}) +
+      svg("0 0 100 100", anel("#3fbf6a", "#1d7a3e", "k1"), {x: 78, y: 30, w: 14, e: "zoom", t: .5, d: 4, z: 4, c: "anel toca verde"}) +
+      svg("0 0 100 100", anel("#f2c230", "#a97a10", "k2"), {x: 82, y: 50, w: 12, e: "zoom", t: .55, d: 4, z: 4, c: "anel toca amarelo"}),
+    texto: `<p>— E agora? — disse Polly, com os olhos brilhando.</p>
+      <p>— Agora vamos escolher um laguinho novo! — respondeu Digory.</p>
+      <p>Eles escolheram um laguinho bem diferente, colocaram os anéis verdes, deram as mãos e contaram: um... dois... três... JÁ!</p>
+      <div class="continua">Para onde será que esse laguinho vai levar? <span>Continua no capítulo 4... toque nos anéis ✨</span></div>
+      ${botoesFim("")}` }]
+};
+
+const HISTORIAS = [CAP1, CAP2, CAP3];
 
 /* ---------- estilo (identidade própria do livro) ---------- */
 const css = `
@@ -345,6 +575,55 @@ const css = `
 @keyframes faisca{to{transform:translate(var(--dx), var(--dy)) scale(.2) rotate(180deg); opacity:0}}
 .ativa-nao *{animation-play-state:paused !important}
 
+/* capítulos 2 e 3 */
+#livro .t-papel{background-color:#efe3c8}
+#livro .t-bosque{background:#24402a url(${DIR}papel.jpg); background-blend-mode:multiply}
+#livro .t-bosque .texto{color:#eef0d6} #livro .t-bosque .texto b{color:#ffe08a} #livro .t-bosque .texto b.vd{color:#9ff0b6}
+#livro .t-bosque h1{color:#f3e6a8}
+#livro .t-agua{background:linear-gradient(#2e7d78, #123a44 70%); }
+#livro .t-agua .texto{color:#e8f6f0} #livro .t-agua .texto b{color:#ffe08a} #livro .t-agua .texto b.vd{color:#9ff0b6}
+#livro .t-bosque .cena, #livro .t-agua .cena{left:0; top:0; width:62%; height:100%}
+#livro .raios{position:absolute; inset:0; pointer-events:none; z-index:8; background:repeating-linear-gradient(100deg, transparent 0 8%, rgba(255,240,170,.13) 8% 11%, transparent 11% 19%);
+  mask-image:linear-gradient(#000, transparent 85%); -webkit-mask-image:linear-gradient(#000, transparent 85%); animation:raios 6s ease-in-out infinite alternate}
+@keyframes raios{to{opacity:.45; transform:translateX(3%)}}
+#livro .bolhas{position:absolute; inset:0; overflow:hidden}
+#livro .bolhas i{position:absolute; bottom:-5%; border-radius:50%; border:2px solid rgba(230,255,250,.85); background:radial-gradient(circle at 35% 30%, rgba(255,255,255,.7), rgba(200,255,250,.12) 60%); animation:bolha 3.2s ease-in infinite}
+@keyframes bolha{to{transform:translateY(calc(var(--u)*-70)) translateX(calc(var(--u)*2)); opacity:0}}
+#livro .luz-cima{width:100%; height:100%; background:radial-gradient(60% 100% at 50% 0%, rgba(200,255,200,.55), transparent 70%)}
+#livro .onda{transform-origin:center; transform-box:fill-box; animation:onda 3s ease-out infinite}
+@keyframes onda{from{transform:scale(.3); opacity:.9} to{transform:scale(2); opacity:0}}
+#livro .po{animation:pisca 1.4s ease-in-out infinite}
+#livro .brilha svg{filter:drop-shadow(0 0 calc(var(--u)*1) #ffd76a)}
+#livro .tinta img{filter:none}
+#livro .reflexo svg{opacity:.55; filter:blur(2px); border-radius:50%}
+#livro .estrelinhas{position:relative; width:100%; height:100%}
+#livro .estrelinhas i{position:absolute; width:calc(var(--u)*1.4); height:calc(var(--u)*1.4); background:#ffd84a; clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%); animation:pisca 1.2s ease-in-out infinite}
+#livro .redemoinho{position:absolute; inset:-20%; background:repeating-conic-gradient(from 0deg, rgba(255,216,74,.06) 0 8deg, transparent 8deg 30deg); animation:gira 12s linear infinite; border-radius:50%}
+@keyframes gira{to{transform:rotate(360deg)}}
+#livro .botoes{display:flex; gap:calc(var(--u)*1.2); flex-wrap:wrap}
+#livro .prox{font-family:"IM Fell English", serif; font-size:calc(var(--u)*2.1); color:#2b2118; background:#f1dc9a; border:0; border-radius:99px; padding:.35em 1.1em; box-shadow:0 4px 0 #a9823a, 0 8px 18px rgba(0,0,0,.3); cursor:pointer}
+#livro .prox:active{transform:translateY(3px); box-shadow:0 1px 0 #a9823a}
+
+/* sumário */
+#livro .sumario{display:none; position:fixed; inset:0; z-index:55; flex-direction:column; align-items:center; justify-content:center; gap:2vh; padding:6vh 4vw; text-align:center}
+#livro.no-sumario .sumario{display:flex}
+#livro.no-sumario .trilho, #livro.no-sumario .pag, #livro.no-sumario .topo, #livro.no-sumario .caps{display:none}
+#livro .sumario h1{font-size:min(9vh, 7vw)}
+#livro .sumario .sobre{font-size:min(3.4vh, 2.6vw)}
+#livro .caps-lista{display:flex; gap:3vw; justify-content:center; flex-wrap:wrap; margin-top:2vh}
+#livro .cap-card{width:min(26vw, 260px); aspect-ratio:.78; background:#efe3c8 url(${DIR}papel.jpg); background-size:300px; border:0; border-radius:6px; padding:1.4vh 1vw;
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:.6vh; color:#2b2118; cursor:pointer; transform:rotate(var(--r));
+  box-shadow:0 16px 30px rgba(0,0,0,.5), inset 0 0 30px rgba(110,70,20,.3); transition:transform .15s; font-family:"EB Garamond", serif}
+#livro .cap-card:active{transform:rotate(var(--r)) scale(.96)}
+#livro .cap-card .mini{position:relative; width:52%; flex:1; display:flex; align-items:center}
+#livro .cap-card .mini .peca{position:relative; left:0 !important; top:0 !important}
+#livro .cap-card .num{font-family:"IM Fell English", serif; font-style:italic; color:#8c2f2b; font-size:min(2.6vh, 2vw)}
+#livro .cap-card .nome{font-family:"IM Fell English", serif; font-size:min(3.4vh, 2.5vw); line-height:1.05}
+#livro .cap-card .selo{font-size:min(2.2vh, 1.7vw); color:#6b5a3a; background:#f8f0dc; padding:.1em .7em; border-radius:99px; box-shadow:0 1px 3px rgba(0,0,0,.2)}
+@media (orientation:portrait){ #livro .caps-lista{flex-direction:column; align-items:center; gap:2.4vh} #livro .cap-card{width:min(70vw, 420px); aspect-ratio:2.4; flex-direction:row; justify-content:flex-start; gap:4vw; padding:1.6vh 4vw; text-align:left}
+  #livro .cap-card .mini{width:22%; flex:none; height:90%} #livro .cap-card .num{font-size:2.4vh} #livro .cap-card .nome{font-size:3.2vh} #livro .cap-card .selo{font-size:2vh}
+  #livro .prox{font-size:calc(var(--u)*3.2)} }
+
 /* capa: texto à direita, sobre o céu */
 #livro .capa .texto{width:34%}
 
@@ -391,7 +670,9 @@ function monta(h){
   });
   pecas = folhas$.map(f => [...f.querySelectorAll(".peca, .linha")].map(el => ({el, e: el.dataset.e || "sobe", t: +el.dataset.t || 0, d: +el.dataset.d || 0, r: parseFloat(el.style.getPropertyValue("--r")) || 0})));
   L.querySelector(".pag").innerHTML = h.paginas.map(() => "<i></i>").join("");
-  folhas$[N - 1].querySelector(".fim").onclick = fecha;
+  const fim = folhas$[N - 1];
+  fim.querySelector(".fim").onclick = () => sumario();
+  const px = fim.querySelector(".prox"); if (px) px.onclick = () => abreHistoria(px.dataset.prox);
   folhas$[N - 1].querySelectorAll(".anel.toca").forEach(a => a.addEventListener("pointerdown", e => { e.stopPropagation(); tocaAnel(a, e) }));
   medida();
 }
@@ -412,16 +693,18 @@ function poe(it, e, par){
   else if (k === "zoom") tr = `scale(${.2 + .8*q}) rotate(${r + (1 - e)*40}deg)`;
   else if (k === "subir") tr = `translateY(${(1 - sai(e))*60}%) rotate(${r}deg)`;
   else if (k === "sobe") tr = `translateY(${(1 - sai(e))*1.2}em) rotate(${(1 - e)*-1.5}deg)`;            /* linhas do texto */
+  else if (k === "sumir") tr = `scale(${1 - e*.25}) rotate(${r + e*6}deg)`;                               /* some aos pouquinhos */
   else tr = `rotate(${r}deg)`;
   if (par && it.d) tr = `translate3d(0, ${par*it.d*-6}px, 0) ` + tr;                                    /* parallax enquanto lê */
   el.style.transform = tr;
-  el.style.opacity = k === "pop" ? cl(e*5) : o;
+  el.style.opacity = k === "pop" ? cl(e*5) : k === "sumir" ? 1 - suave(e) : o;
+  if (k === "sumir") el.style.filter = `blur(${e*6}px)`;
 }
 
 /* ---------- a mágica: tudo depende só da posição da rolagem ---------- */
 function quadro(){
   raf = 0; if (!aberto) return;
-  const H = innerHeight, p = Math.max(0, Math.min(N - 1, L.scrollTop/(PASSO*H)));
+  const H = innerHeight, p = Math.max(0, Math.min(N - .5, L.scrollTop/(PASSO*H)));   /* a última folha tem meia rolagem extra (para as peças que somem) */
   const atual = Math.floor(p), f = p - atual;
   for (let i = 0; i < N; i++){
     const fo = folhas$[i], vis = i >= atual - 0 && i <= atual + 1;
@@ -429,7 +712,7 @@ function quadro(){
     fo.classList.toggle("ativa-nao", !(i === atual || (i === atual + 1 && f > .5)));
     if (!vis) continue;
     /* a folha de cima vai embora na segunda metade da rolagem dela */
-    const sair = i === atual ? suave(cl((f - .5)/.5)) : 0, tipo = VIRADAS[i % VIRADAS.length];
+    const sair = i === atual && i < N - 1 ? suave(cl((f - .5)/.5)) : 0, tipo = VIRADAS[i % VIRADAS.length];
     let tr = "", ori = "50% 50%";
     if (sair > 0){
       if (tipo === "virar"){ ori = "0% 50%"; tr = `rotateY(${-sair*178}deg) translateZ(${Math.sin(sair*Math.PI)*40}px)` }
@@ -449,13 +732,14 @@ function quadro(){
     /* as peças desta folha se montam (a primeira já começa montada um pouco) */
     const ent = i === 0 ? intro : cl((p - i + .55)/.95);       /* começa embaixo da folha que vira e termina já na nova */
     const par = p - i - .25;
-    for (const it of pecas[i]) poe(it, cl((ent - it.t*.55)/.45), par);
+    const lendo = i === atual ? cl(f/.5) : 0;                  /* 0..1 enquanto a folha está parada na frente */
+    for (const it of pecas[i]) poe(it, it.e === "sumir" ? cl((lendo - it.t)/(.85 - it.t)) : cl((ent - it.t*.55)/.45), par);
   }
   if (atual !== ultimaPag){
     if (ultimaPag >= 0) farfalha();
     ultimaPag = atual;
     L.querySelectorAll(".pag i").forEach((d, k) => d.classList.toggle("on", k === atual));
-    try{ localStorage.setItem("agnespad:historia:" + hist.id, String(atual)) }catch(e){}
+    try{ localStorage.setItem("agnespad:historia:" + hist.id, String(atual)); if (atual === N - 1) localStorage.setItem("agnespad:lido:" + hist.id, "1") }catch(e){}
   }
 }
 const pede = () => { if (!raf) raf = requestAnimationFrame(quadro) };
@@ -463,7 +747,7 @@ function medida(){
   if (!folhas$.length) return;
   const w = folhas$[0].getBoundingClientRect().width || innerWidth*.9;
   L.style.setProperty("--u", (w/100).toFixed(2) + "px");
-  L.querySelector(".trilho").style.height = ((N - 1)*PASSO*innerHeight + innerHeight) + "px";
+  L.querySelector(".trilho").style.height = ((N - .5)*PASSO*innerHeight + innerHeight) + "px";
   pede();
 }
 
@@ -504,23 +788,45 @@ function cria(){
   document.head.appendChild(st);
   L = document.createElement("div"); L.id = "livro";
   L.innerHTML = `<div class="trilho"><div class="palco"><div class="poeira"></div></div></div>
-    <div class="ctl"><button class="lua" aria-label="Luz baixinha">🌙</button><button class="topo" aria-label="Voltar ao começo">↺</button><button class="sai" aria-label="Fechar o livro">✕</button></div>
+    <div class="sumario"></div>
+    <div class="ctl"><button class="caps" aria-label="Capítulos">☰</button><button class="lua" aria-label="Luz baixinha">🌙</button><button class="topo" aria-label="Voltar ao começo">↺</button><button class="sai" aria-label="Fechar o livro">✕</button></div>
     <div class="pag"></div>`;
   document.body.appendChild(L);
   L.addEventListener("scroll", pede, {passive: true});
   addEventListener("resize", () => { if (aberto) medida() });
   L.querySelector(".sai").onclick = fecha;
+  L.querySelector(".caps").onclick = () => sumario();
   L.querySelector(".topo").onclick = () => L.scrollTo({top: 0, behavior: "smooth"});
   L.querySelector(".lua").onclick = () => { L.classList.toggle("penumbra"); try{ localStorage.setItem("agnespad:penumbra", L.classList.contains("penumbra") ? "1" : "") }catch(e){} };
   try{ if (localStorage.getItem("agnespad:penumbra")) L.classList.add("penumbra") }catch(e){}
 }
+/* sumário: os capítulos como bilhetes de papel na mesa */
+const MINI = {sobrinho1: svg("0 0 100 100", anel("#f2c230", "#a97a10", "m1"), {x: 0, y: 0, w: 100, e: "fade"}),
+              sobrinho2: svg("0 0 120 280", tioAndre, {x: 0, y: 0, w: 100, e: "fade"}),
+              sobrinho3: svg("0 0 200 80", laguinho, {x: 0, y: 0, w: 100, e: "fade"})};
+function sumario(){
+  if (!L) cria();
+  if (typeof show === "function") show("menu");
+  if (typeof stopAudio === "function") stopAudio();
+  aberto = false; L.classList.add("on", "no-sumario"); L.scrollTop = 0;
+  const lido = id => { try{ return localStorage.getItem("agnespad:lido:" + id) }catch(e){ return null } };
+  const onde = id => { try{ return +localStorage.getItem("agnespad:historia:" + id) || 0 }catch(e){ return 0 } };
+  const S = L.querySelector(".sumario");
+  S.innerHTML = `<div class="sobre">As Crônicas de Nárnia</div><h1>O Sobrinho do Mago</h1>
+    <div class="caps-lista">${HISTORIAS.map((h, i) => `<button class="cap-card" data-id="${h.id}" style="--r:${[-3, 2, -1.5][i % 3]}deg">
+      <div class="mini">${MINI[h.id] || ""}</div><div class="num">Capítulo ${i + 1}</div><div class="nome">${h.curto}</div>
+      <div class="selo">${lido(h.id) ? "✓ já lido" : onde(h.id) ? "parou na pág. " + (onde(h.id) + 1) : "novo"}</div></button>`).join("")}</div>`;
+  S.querySelectorAll(".peca").forEach(el => { el.style.transform = "none"; el.style.opacity = 1 });
+  S.querySelectorAll(".cap-card").forEach(b => b.onclick = () => abreHistoria(b.dataset.id));
+}
 window.abreHistoria = function(id){
   if (!L) cria();
+  if (!id) return sumario();
   if (typeof show === "function") show("menu");
   if (typeof stopAudio === "function") stopAudio();
   const h = HISTORIAS.find(x => x.id === id) || HISTORIAS[0];
   if (hist !== h) monta(h);
-  aberto = true; ultimaPag = -1; L.classList.add("on");
+  aberto = true; ultimaPag = -1; L.classList.add("on"); L.classList.remove("no-sumario");
   let pg = 0; try{ pg = +localStorage.getItem("agnespad:historia:" + h.id) || 0 }catch(e){}
   if (pg >= N - 1) pg = 0;                           /* terminou da última vez: começa de novo */
   intro = pg === 0 ? 0 : 1;
@@ -532,9 +838,9 @@ window.abreHistoria = function(id){
     }
   });
 };
-function fecha(){ aberto = false; if (L) L.classList.remove("on") }
+function fecha(){ aberto = false; if (L) L.classList.remove("on", "no-sumario") }
 window.fechaHistoria = fecha;
 
 const bt = document.getElementById("goStory");
-if (bt) bt.onclick = () => abreHistoria("sobrinho1");
+if (bt) bt.onclick = () => abreHistoria();
 })();

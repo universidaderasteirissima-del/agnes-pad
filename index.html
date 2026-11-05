@@ -104,12 +104,43 @@ button{font-family:inherit; border:0; cursor:pointer; color:inherit}
 
 /* ---------- Menu ---------- */
 .menu{display:flex; gap:4%; width:100%; justify-content:center; align-items:stretch}
-.card{flex:0 1 40%; max-width:420px; aspect-ratio:1/1.05; border-radius:36px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4%;
+.card{flex:0 1 30%; max-width:340px; aspect-ratio:1/1.05; border-radius:36px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4%;
   font-size:min(6vh,4.6vw); font-weight:700; box-shadow:0 10px 0 rgba(0,0,0,.2), 0 18px 30px rgba(0,0,0,.25); transition:transform .1s}
 .card:active{transform:translateY(8px) scale(.98)}
 .card .ico{font-size:min(20vh,15vw); line-height:1}
 .card.en{background:linear-gradient(#ff9ccb,#ff6fae)}
 .card.sn{background:linear-gradient(#ffe066,#ffbf1f); color:#6b4500}
+.card.gr{background:linear-gradient(#c4b5fd,#8b5cf6)}
+
+/* ---------- Guarda-roupa ---------- */
+#wardrobe{flex-direction:row; align-items:stretch; justify-content:flex-start; gap:2%; padding:72px 2% 2%}
+.stage{flex:0 0 40%; position:relative; border-radius:30px; background:radial-gradient(60% 50% at 50% 55%, rgba(255,255,255,.28), rgba(255,255,255,.06)); transition:box-shadow .15s, background .15s; touch-action:none}
+.stage.glow{box-shadow:inset 0 0 0 6px var(--yellow); background:rgba(255,216,77,.22)}
+#doll{position:absolute; inset:2% 2% 88px; display:flex; align-items:center; justify-content:center}
+#doll svg{height:100%; width:100%; overflow:visible; touch-action:none}
+#doll .worn{cursor:grab}
+#doll .lifted{opacity:.25}
+.wtools{position:absolute; left:0; right:0; bottom:10px; display:flex; justify-content:center; gap:14px}
+.wtools button{width:min(9vh,70px); height:min(9vh,70px); border-radius:50%; background:#fff; font-size:min(5vh,36px); box-shadow:0 6px 0 rgba(0,0,0,.18)}
+.wtools button:active{transform:translateY(4px); box-shadow:0 2px 0 rgba(0,0,0,.18)}
+.closet{flex:1; min-width:0; min-height:0; display:flex; gap:12px; padding:14px; border-radius:30px; background:linear-gradient(#c58a5a,#9a6038); box-shadow:inset 0 0 0 6px #7c4a29, 0 10px 0 rgba(0,0,0,.2)}
+.wtabs{flex:none; width:min(11vh,92px); overflow-y:auto; -webkit-overflow-scrolling:touch; display:flex; flex-direction:column; gap:10px; touch-action:pan-y; padding:2px}
+.wtab{flex:none; width:100%; aspect-ratio:1; border-radius:22px; background:#fbe9d7; padding:6px; box-shadow:0 4px 0 rgba(0,0,0,.15)}
+.wtab.on{background:#fff; box-shadow:0 0 0 5px var(--yellow)}
+.wtab svg{width:100%; height:100%}
+.witems{flex:1; min-width:0; display:grid; grid-template-columns:repeat(3,1fr); grid-auto-rows:min-content; gap:12px; align-content:start; background:#fff4ea; border-radius:22px; padding:12px; overflow:hidden; touch-action:none}
+.whead{grid-column:1/-1; color:#7c4a29; font-weight:700; font-size:min(4.4vh,30px); padding:0 4px}
+.item{background:#fff; border-radius:20px; box-shadow:0 4px 0 rgba(0,0,0,.1); display:flex; flex-direction:column; align-items:center; padding:6px; aspect-ratio:1; touch-action:none; transition:transform .1s}
+.item.press{transform:scale(.94)}
+.item.worn{box-shadow:0 0 0 4px #4caf3f}
+.item svg{width:100%; flex:1; min-height:0; pointer-events:none}
+.item b{font-size:min(2.6vh,18px); color:#1d4f8f}
+.ghost{position:fixed; width:min(24vh,180px); height:min(24vh,180px); pointer-events:none; z-index:60; transform:translate(-50%,-50%) scale(1.1); filter:drop-shadow(0 12px 12px rgba(0,0,0,.3))}
+.ghost svg{width:100%; height:100%}
+.spark{position:absolute; font-size:min(5vh,34px); pointer-events:none; animation:sparkle 1s ease-out forwards}
+@keyframes sparkle{0%{opacity:0; transform:scale(.3)} 30%{opacity:1; transform:scale(1.2)} 100%{opacity:0; transform:translateY(-30px) scale(.8)}}
+.flash{position:absolute; inset:0; background:#fff; border-radius:30px; animation:flash .6s ease-out forwards; z-index:9; pointer-events:none}
+@keyframes flash{from{opacity:.95} to{opacity:0}}
 .menu-top{display:flex; align-items:center; gap:2%; margin-bottom:2%}
 .menu-top .lola{width:min(20vh,16vw)}
 .bubble{background:#fff; color:#1d4f8f; font-weight:700; font-size:min(4.6vh,3.6vw); padding:.5em .9em; border-radius:26px; position:relative; max-width:60vw}
@@ -169,7 +200,14 @@ button{font-family:inherit; border:0; cursor:pointer; color:inherit}
   .lola{width:min(24vh,40vw)}
   .word-card{width:min(78vw,52vh)}
   .menu{flex-direction:column; align-items:center}
-  .card{flex:none; width:min(60vw,34vh); aspect-ratio:1.3/1}
+  .card{flex:none; width:min(60vw,22vh); aspect-ratio:1.5/1}
+  .card .ico{font-size:min(10vh,15vw)}
+  #wardrobe{flex-direction:column}
+  .stage{flex:0 0 46%}
+  .closet{flex-direction:column}
+  .wtabs{flex-direction:row; width:auto; height:min(9vh,90px); overflow-x:auto; overflow-y:hidden; touch-action:pan-x}
+  .wtab{height:100%; width:auto}
+  .witems{grid-template-columns:repeat(4,1fr); gap:8px; padding:8px}
 }
 </style>
 </head>
@@ -204,6 +242,7 @@ button{font-family:inherit; border:0; cursor:pointer; color:inherit}
       <div class="menu">
         <button class="card en" id="goLearn"><div class="ico">🗣️</div>Inglês</button>
         <button class="card sn" id="goSnake"><div class="ico">🐍</div>Cobrinha</button>
+        <button class="card gr" id="goWardrobe"><div class="ico">👗</div>Guarda-roupa</button>
       </div>
     </section>
 
@@ -233,6 +272,22 @@ button{font-family:inherit; border:0; cursor:pointer; color:inherit}
       <div class="trophy">🏆</div>
       <div class="sub" id="doneTxt">Parabéns, Agnes!</div>
       <div class="row"><button class="big" id="more">Mais palavras ▶</button><button class="big alt" id="toMenu">🏠</button></div>
+    </section>
+
+    <!-- Guarda-roupa -->
+    <section class="view" id="wardrobe">
+      <div class="stage" id="stage">
+        <div id="doll"></div>
+        <div class="wtools">
+          <button id="wRandom" aria-label="Surpresa">🎲</button>
+          <button id="wPhoto" aria-label="Foto">📸</button>
+          <button id="wClear" aria-label="Tirar tudo">🧹</button>
+        </div>
+      </div>
+      <div class="closet">
+        <div class="wtabs" id="wTabs"></div>
+        <div class="witems" id="wItems"></div>
+      </div>
     </section>
 
     <!-- Painel dos pais -->
@@ -780,6 +835,7 @@ function openParents(){
       <div class="tile"><b>${fmtMin(hoje.min)}</b><span>Tempo hoje</span></div>
       <div class="tile"><b>${fmtMin(minSemana)}</b><span>Últimos 7 dias</span></div>
       <div class="tile"><b>${stars}</b><span>Estrelinhas</span></div>
+      <div class="tile"><b>${stats.roupas || 0}</b><span>Roupas trocadas no guarda-roupa</span></div>
       <div class="tile"><b>${stats.snake.recorde}</b><span>Recorde na cobrinha (${stats.snake.partidas} partidas)</span></div>
     </div>
     <h3>Palavras</h3>
@@ -824,5 +880,6 @@ fetch("content.json").then(r => r.json()).then(c => {
   C.snakeFoods.forEach(f => load("en_" + f));
 });
 </script>
+<script src="guarda-roupa.js"></script>
 </body>
 </html>

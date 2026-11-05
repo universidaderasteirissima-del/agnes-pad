@@ -103,16 +103,17 @@ button{font-family:inherit; border:0; cursor:pointer; color:inherit}
 .big:active{transform:translateY(6px); box-shadow:0 2px 0 #c99a10}
 
 /* ---------- Menu ---------- */
-.menu{display:flex; gap:4%; width:100%; justify-content:center; align-items:stretch}
-.card{flex:0 1 18%; max-width:300px; aspect-ratio:1/1.05; border-radius:36px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4%;
-  font-size:min(6vh,4.6vw); font-weight:700; box-shadow:0 10px 0 rgba(0,0,0,.2), 0 18px 30px rgba(0,0,0,.25); transition:transform .1s}
+.menu{display:flex; gap:2.6%; width:100%; justify-content:center; align-items:stretch}
+.card{flex:0 1 15%; min-width:0; max-width:300px; aspect-ratio:1/1.05; border-radius:min(3vw,36px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4%;
+  font-size:min(4.4vh,2.5vw); padding:0 4px; font-weight:700; box-shadow:0 10px 0 rgba(0,0,0,.2), 0 18px 30px rgba(0,0,0,.25); transition:transform .1s}
 .card:active{transform:translateY(8px) scale(.98)}
-.card .ico{font-size:min(17vh,11vw); line-height:1}
+.card .ico{font-size:min(15vh,8vw); line-height:1}
 .card.en{background:linear-gradient(#ff9ccb,#ff6fae)}
 .card.sn{background:linear-gradient(#ffe066,#ffbf1f); color:#6b4500}
 .card.gr{background:linear-gradient(#c4b5fd,#8b5cf6)}
 .card.co{background:linear-gradient(#fdba74,#f97316)}
 .card.ca{background:linear-gradient(#f9a8d4,#c026d3)}
+.card.hs{background:linear-gradient(#2a3d78,#0d1530); color:#f1dc9a; box-shadow:inset 0 0 0 3px #c9a24a88, 0 10px 0 rgba(0,0,0,.2), 0 18px 30px rgba(0,0,0,.25)}
 
 /* ---------- Montar a vaqueira ---------- */
 #runSetup{flex-direction:row; align-items:stretch; justify-content:flex-start; gap:2%; padding:72px 2% 2%}
@@ -281,6 +282,7 @@ button{font-family:inherit; border:0; cursor:pointer; color:inherit}
         <button class="card gr" id="goWardrobe"><div class="ico">👗</div>Guarda-roupa</button>
         <button class="card co" id="goRun"><div class="ico">🤠</div>Corrida</button>
         <button class="card ca" id="goCastle"><div class="ico">🏰</div>Castelo</button>
+        <button class="card hs" id="goStory"><div class="ico">📖</div>Histórias</button>
       </div>
     </section>
 
@@ -948,5 +950,6 @@ fetch("content.json").then(r => r.json()).then(c => {
 <script src="guarda-roupa.js"></script>
 <script src="corrida.js"></script>
 <script src="castelo.js"></script>
+<script src="historias.js"></script>
 </body>
 </html>

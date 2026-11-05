@@ -408,7 +408,16 @@
     "run_in": "Vamos correr, Agnes! Toca na tela para pular!",
     "run_horse": "Upa, cavalinho! Corre, Pipoca!",
     "run_ops": "Opa! Tropeçou! Continua correndo!",
-    "run_wow": "Uau, que corrida! Você é muito rápida!"
+    "run_wow": "Uau, que corrida! Você é muito rápida!",
+    "run_horse_pipoca": "Upa, cavalinho! Corre, Pipoca!",
+    "run_horse_biscoito": "Upa, cavalinho! Corre, Biscoito!",
+    "run_horse_estrela": "Upa, cavalinho! Corre, Estrela!",
+    "run_horse_trovao": "Upa, cavalinho! Corre, Trovão!",
+    "run_horse_algodao": "Upa, cavalinho! Corre, Algodão!",
+    "run_horse_caramelo": "Upa, cavalinho! Corre, Caramelo!",
+    "run_setup": "Monta a sua vaqueira e o seu cavalinho!",
+    "run_go": "Vamos lá, vaqueira! A joaninha vai correr com você!",
+    "run_lasso": "Laça as estrelinhas!"
   },
   "snakeFoods": [
     "apple",

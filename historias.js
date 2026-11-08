@@ -13,7 +13,7 @@ const VIRADAS = ["virar", "levantar", "voar"];
 /* ---------- peças de colagem ---------- */
 /* o: {x, y, w (em % da cena), r (giro), e (entrada), t (atraso 0..1), d (profundidade p/ parallax), z, c (classe), s (estilo extra)} */
 function peca(html, o){
-  return `<div class="peca ${o.c || ""}" data-e="${o.e || "pop"}" data-t="${o.t || 0}" data-d="${o.d || 0}"
+  return `<div class="peca ${o.c || ""}${o.a ? " interativo" : ""}" data-e="${o.e || "pop"}" data-t="${o.t || 0}" data-d="${o.d || 0}"${o.a ? ` data-acao="${o.a}"` : ""}
     style="left:${o.x}%;top:${o.y}%;width:${o.w}%;--r:${o.r || 0}deg;z-index:${o.z || 1};${o.s || ""}">${html}</div>`;
 }
 const img = (src, o) => peca(`<img src="${DIR}${src}.webp" alt="" draggable="false">`, Object.assign({c: "foto"}, o, {c: "foto " + (o.c || "")}));
@@ -55,7 +55,7 @@ function vigas(cor = "#6b4426"){
 const porta = `<rect x="10" y="8" width="100" height="168" rx="6" fill="#5b3a22"/><rect x="18" y="16" width="84" height="152" fill="#7b5232"/>
   <rect x="26" y="26" width="68" height="56" fill="#6b4529"/><rect x="26" y="94" width="68" height="64" fill="#6b4529"/>
   <circle cx="88" cy="96" r="6" fill="#d9b25a"/><rect class="fresta" x="18" y="166" width="84" height="7" fill="#ffd27a"/>`;
-function estante(){
+function estanteSvg(){
   const cores = ["#7a2f2a", "#2f4a6b", "#3f5a2f", "#8a6a2a", "#4b2e4a", "#a04a2a", "#2a3a3a", "#6b5a3a"];
   let s = `<rect width="300" height="300" fill="#4a2e1b"/>`, k = 0;
   for (let r = 0; r < 5; r++){
@@ -113,7 +113,7 @@ const colina = `<rect width="200" height="140" fill="#cfe3e6"/><circle cx="160" 
 const folhas = (cor) => `<path d="M10 50 Q30 6 70 10 Q60 50 10 50Z" fill="${cor}"/><path d="M12 48 Q40 30 66 12" stroke="#2f4a22" stroke-width="2" fill="none"/>`;
 const estrelas = () => Array.from({length: 26}, (_, i) => `<i style="left:${(i*37) % 100}%;top:${(i*53) % 62}%;animation-delay:${(i % 7)*.4}s;transform:scale(${.5 + (i % 4)*.25})"></i>`).join("");
 
-const botoesFim = prox => `<div class="botoes"><button class="fim">Boa noite 🌙</button>${prox ? `<button class="prox" data-prox="${prox}">${prox === "sobrinho2" ? "Capítulo 2" : "Capítulo 3"} →</button>` : ""}</div>`;
+const botoesFim = prox => `<div class="botoes"><button class="fim">Boa noite 🌙</button>${prox ? `<button class="prox" data-prox="${prox}">Capítulo ${prox.replace(/\D/g, "")} →</button>` : ""}</div>`;
 
 /* ---------- O Sobrinho do Mago · Capítulo 1: A porta errada ---------- */
 const CAP1 = {
@@ -214,7 +214,7 @@ const CAP1 = {
   },
   { /* 9 · a sala secreta */
     tema: "sala",
-    cena: svg("0 0 300 300", estante(), {x: 0, y: 0, w: 40, e: "esq", t: .0, d: 1, s: "height:100%", c: "fundo-cena"}) +
+    cena: svg("0 0 300 300", estanteSvg(), {x: 0, y: 0, w: 40, e: "esq", t: .0, d: 1, s: "height:100%", c: "fundo-cena"}) +
       svg("0 0 200 176", lareira, {x: 42, y: 26, w: 34, e: "pop", t: .1, d: 2, z: 2, c: "lareira"}) +
       svg("0 0 140 160", poltrona, {x: 70, y: 40, w: 28, e: "pop", t: .25, d: 3, z: 3}) +
       svg("0 0 100 110", gaiola, {x: 46, y: 2, w: 14, e: "cair", t: .4, d: 3, z: 3}) +
@@ -296,7 +296,7 @@ const CAP2 = {
       <p>E alguém estava sentado na poltrona o tempo todo...</p>
       <div class="dica">role devagarinho para baixo ↓</div>` },
   { tema: "sala",
-    cena: svg("0 0 300 300", estante(), {x: 0, y: 0, w: 34, e: "esq", t: .0, d: 1, s: "height:100%", c: "fundo-cena"}) +
+    cena: svg("0 0 300 300", estanteSvg(), {x: 0, y: 0, w: 34, e: "esq", t: .0, d: 1, s: "height:100%", c: "fundo-cena"}) +
       svg("0 0 140 160", poltrona, {x: 70, y: 46, w: 28, e: "dir", t: .1, d: 1, z: 1}) +
       svg("0 0 120 280", tioAndre, {x: 38, y: 4, w: 34, e: "subir", t: .2, d: 3, z: 3}) +
       svg("0 0 90 40", chave, {x: 8, y: 70, w: 18, r: 15, e: "cair", t: .5, d: 4, z: 4}) +
@@ -466,7 +466,7 @@ const CAP3 = {
       <p>— Agora vamos escolher um laguinho novo! — respondeu Digory.</p>
       <p>Eles escolheram um laguinho bem diferente, colocaram os anéis verdes, deram as mãos e contaram: um... dois... três... JÁ!</p>
       <div class="continua">Para onde será que esse laguinho vai levar? <span>Continua no capítulo 4... toque nos anéis ✨</span></div>
-      ${botoesFim("")}` }]
+      ${botoesFim("sobrinho4")}` }]
 };
 
 const HISTORIAS = [CAP1, CAP2, CAP3];
@@ -624,6 +624,137 @@ const css = `
   #livro .cap-card .mini{width:22%; flex:none; height:90%} #livro .cap-card .num{font-size:2.4vh} #livro .cap-card .nome{font-size:3.2vh} #livro .cap-card .selo{font-size:2vh}
   #livro .prox{font-size:calc(var(--u)*3.2)} }
 
+/* brincadeiras: peças que respondem ao toque */
+#livro .interativo{pointer-events:auto; cursor:pointer}
+#livro .interativo svg, #livro .interativo img{pointer-events:auto}
+#livro .interativo::after{content:""; position:absolute; right:-4%; top:-4%; width:calc(var(--u)*3.4); height:calc(var(--u)*3.4); border-radius:50%;
+  background:radial-gradient(circle, #fff7d0 0 30%, rgba(255,230,140,.6) 31% 45%, transparent 46%); animation:chamatoque 1.4s ease-out infinite; pointer-events:none; z-index:9}
+#livro .interativo.tocado::after{display:none}
+@keyframes chamatoque{0%{transform:scale(.6); opacity:1} 100%{transform:scale(1.8); opacity:0}}
+#livro .dica-toque{font-family:"IM Fell English", serif; font-style:italic; font-size:calc(var(--u)*1.5); opacity:.85}
+#livro .treme{animation:treme .09s linear 12}
+@keyframes treme{25%{transform:translate(2px,-2px)} 75%{transform:translate(-2px,2px)}}
+
+/* estante */
+#livro .sumario.lista{justify-content:flex-start; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-top:9vh}
+#livro .voltar-estante{position:fixed; left:max(12px, env(safe-area-inset-left)); top:max(12px, env(safe-area-inset-top)); z-index:2; font-family:"IM Fell English", serif; font-size:18px;
+  color:#e9d9b0; background:rgba(13,21,48,.6); border:1px solid #c9a24a66; border-radius:99px; padding:8px 16px; cursor:pointer}
+#livro .prateleira{display:flex; gap:5vw; justify-content:center; align-items:flex-end; margin-top:3vh; position:relative; z-index:1}
+#livro .livro-capa{position:relative; width:min(24vw, 34vh, 260px); aspect-ratio:.68; border:0; border-radius:4px 10px 10px 4px; cursor:pointer;
+  background:linear-gradient(90deg, rgba(0,0,0,.35), transparent 9%, rgba(255,255,255,.06) 50%, rgba(0,0,0,.25)), var(--cor);
+  box-shadow:inset 0 0 0 3px #c9a24a55, inset 0 0 40px rgba(0,0,0,.45), 0 20px 30px rgba(0,0,0,.55); color:#f1dc9a;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.2vh; padding:6% 10%; font-family:"IM Fell English", serif; transition:transform .2s}
+#livro .livro-capa:active{transform:translateY(-6px) rotate(-1deg)}
+#livro .livro-capa .lomb{position:absolute; left:0; top:0; bottom:0; width:9%; border-right:2px solid #c9a24a66}
+#livro .livro-capa svg{width:44%; filter:drop-shadow(0 0 8px rgba(255,220,120,.5))}
+#livro .lv-n{font-style:italic; font-size:min(2.4vh, 1.8vw); color:#c9a24a}
+#livro .lv-t{font-size:min(3.6vh, 2.5vw); line-height:1.08; text-align:center}
+#livro .lv-s{font-family:"EB Garamond", serif; font-size:min(2.1vh, 1.5vw); color:#e9d9b0cc}
+#livro .livro-capa.em-breve{filter:saturate(.7) brightness(.85)}
+#livro .carimbo{position:absolute; top:80%; left:50%; transform:translate(-50%, -50%) rotate(-14deg); font-family:"IM Fell English", serif; letter-spacing:.08em;
+  font-size:min(4vh, 3vw); color:#c0392b; border:4px double #c0392b; border-radius:8px; padding:.1em .5em; background:rgba(255,240,220,.88); box-shadow:0 4px 10px rgba(0,0,0,.4); white-space:nowrap}
+#livro .balanca{animation:treme .09s linear 6}
+#livro .chao-estante{width:min(80vw, 760px); height:18px; margin-top:-1vh; background:linear-gradient(#6b4426, #3a2416); border-radius:4px; box-shadow:0 14px 24px rgba(0,0,0,.5)}
+#livro .lista .caps-lista{display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:2.4vw; width:min(96vw, 1100px)}
+#livro .lista .cap-card{width:auto; aspect-ratio:.8; justify-content:flex-end}
+#livro .lista .cap-card .mini{flex:none; height:42%; width:80%; justify-content:center; overflow:hidden}
+#livro .lista .cap-card .mini .peca{width:auto !important; height:100%; display:flex; justify-content:center; align-items:center}
+#livro .lista .cap-card .mini .peca svg, #livro .lista .cap-card .mini .peca img{width:auto; height:100%; max-width:100%; object-fit:contain}
+#livro .lista .cap-card .mini .emoji .bicho{font-size:min(7vh, 5vw)}
+@media (orientation:portrait){
+  #livro .prateleira{flex-direction:column; align-items:center; gap:3vh} #livro .livro-capa{width:min(46vw, 30vh)} #livro .lv-t{font-size:2.6vh} #livro .lv-n, #livro .lv-s{font-size:1.8vh} #livro .carimbo{font-size:3vh}
+  #livro .lista .caps-lista{grid-template-columns:1fr; width:auto} #livro .lista .cap-card{width:min(78vw, 460px)}
+}
+
+/* capítulos 4 a 15: temas e peças */
+#livro .t-ruina{background:#3a1410 url(${DIR}papel.jpg); background-blend-mode:multiply}
+#livro .t-ruina .texto{color:#f6dcc4} #livro .t-ruina .texto b{color:#ffb48a}
+#livro .t-ceu{background:linear-gradient(#6fa8dc, #cfe8f5 70%)}
+#livro .t-ceu .texto{color:#1d3550}
+#livro .t-ruina .cena, #livro .t-ceu .cena{left:0; top:0; width:62%; height:100%}
+#livro .fundo-foto img{filter:none; opacity:.35}
+#livro .peca.rachas:not(.vis){visibility:hidden}
+#livro .bate .badalo{animation:badalo .9s ease-in-out; transform-origin:50% 0; transform-box:fill-box}
+#livro .bate .martelo{animation:martela .35s ease-in-out; transform-origin:100% 100%; transform-box:fill-box}
+@keyframes badalo{20%{transform:rotate(14deg)} 50%{transform:rotate(-10deg)} 75%{transform:rotate(5deg)}}
+@keyframes martela{50%{transform:rotate(-30deg)}}
+#livro .jan{transition:fill .4s; cursor:pointer}
+#livro .jan.acesa{fill:#ffd27a; stroke:#ffb347}
+#livro .lembranca:empty{display:none}
+#livro .vem{animation:vem .5s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes vem{from{transform:scale(.3) rotate(-8deg); opacity:0}}
+#livro .ext{display:none}
+#livro .peca.e1 .ext.e1, #livro .peca.e2 .ext.e2, #livro .peca.e3 .ext.e3, #livro .peca.e4 .ext.e4{display:inline}
+#livro .tio-chique .fala-tio{position:absolute; left:70%; top:4%; white-space:nowrap; background:#fff; color:#3a2a1a; font-family:"IM Fell English", serif; font-style:italic;
+  font-size:calc(var(--u)*1.7); padding:.2em .7em; border-radius:1em; box-shadow:0 3px 8px rgba(0,0,0,.3)}
+#livro .tio-chique .fala-tio:empty{display:none}
+#livro .galopa{position:absolute}
+#livro .galopa img{display:block; width:100%}
+#livro .galopa .na-carruagem{position:absolute; left:24%; top:-62%; width:20%}
+#livro .galopa.corre img{animation:galopa 2.6s ease-in-out}
+@keyframes galopa{0%{transform:none} 10%{transform:translate(4%, -3%)} 20%{transform:translate(18%, 0)} 30%{transform:translate(32%, -3%)} 45%{transform:translate(50%, 0)}
+  55%{transform:translate(50%, 0) scaleX(-1)} 70%{transform:translate(24%, -3%) scaleX(-1)} 85%{transform:translate(4%, 0) scaleX(-1)} 100%{transform:none}}
+#livro .breu{position:absolute; inset:-6%; background:#020205}
+#livro .ondas-voz{position:relative; width:100%; height:100%}
+#livro .ondas-voz i{position:absolute; left:50%; top:50%; width:20%; aspect-ratio:1; border-radius:50%; border:3px solid rgba(255,214,120,.8); transform:translate(-50%, -50%); animation:onda-voz 3s ease-out infinite}
+#livro .ondas-voz i:nth-child(2){animation-delay:1s} #livro .ondas-voz i:nth-child(3){animation-delay:2s}
+@keyframes onda-voz{to{width:100%; opacity:0}}
+#livro .estrelas-canto{position:relative; width:100%; height:100%}
+#livro .est{position:absolute; width:calc(var(--u)*4.4); aspect-ratio:1; background:#5a6488; cursor:pointer; transition:background .3s;
+  clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+#livro .est.acesa{background:#fff6c8}
+#livro .est.canta{animation:canta 1.2s ease-out}
+@keyframes canta{30%{transform:scale(1.8) rotate(20deg)}}
+#livro .sol-nasce{animation:nasce 7s ease-out infinite alternate; transform-box:fill-box}
+@keyframes nasce{from{transform:translateY(60px)} to{transform:translateY(-60px)}}
+#livro .fraca img{filter:grayscale(.5) brightness(1.15) opacity(.75)}
+#livro .tremendo svg{animation:treme .12s linear infinite}
+#livro .longe img{filter:blur(1px) opacity(.85)}
+#livro .sombra-escura img{filter:brightness(.12) opacity(.8)}
+#livro .lagrimas{position:relative; width:100%; height:100%}
+#livro .lagrimas i{position:absolute; top:0; width:calc(var(--u)*1.4); height:calc(var(--u)*2); border-radius:50% 50% 50% 50% / 60% 60% 40% 40%; background:#bfe6ff; animation:lagrima 2.4s ease-in infinite}
+#livro .lagrimas i:first-child{left:10%} #livro .lagrimas i:last-child{right:10%; animation-delay:1.1s}
+@keyframes lagrima{from{transform:translateY(0); opacity:1} to{transform:translateY(calc(var(--u)*12)); opacity:0}}
+#livro .emoji .bicho{display:block; text-align:center; font-size:calc(var(--u)*5); line-height:1; filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 2px #fff) drop-shadow(0 4px 4px rgba(0,0,0,.3))}
+#livro .emoji-solto{position:absolute; cursor:pointer}
+#livro .balao-bicho{position:absolute; z-index:5; max-width:46%; background:#fff; color:#3a2a1a; font-family:"IM Fell English", serif; font-style:italic; font-size:calc(var(--u)*1.7);
+  padding:.3em .8em; border-radius:1em; box-shadow:0 3px 8px rgba(0,0,0,.3); pointer-events:none}
+#livro .balao-bicho:not(.vem){visibility:hidden}
+#livro .monte{cursor:pointer; transition:transform .4s, opacity .4s; transform-box:fill-box; transform-origin:50% 100%}
+#livro .monte.aberto{transform:scale(1.25, .35); opacity:.55}
+#livro .bicho-pula{position:absolute; font-size:calc(var(--u)*5); transform:translate(-50%, -30%); animation:pula .7s cubic-bezier(.3,1.6,.5,1) both; filter:drop-shadow(0 0 2px #fff) drop-shadow(0 4px 4px rgba(0,0,0,.3)); pointer-events:none}
+@keyframes pula{from{transform:translate(-50%, 40%) scale(.2); opacity:0}}
+#livro .regador.rega svg{animation:rega 1s ease-in-out; transform-origin:30% 80%}
+@keyframes rega{40%, 70%{transform:rotate(28deg)}}
+#livro .gotas{opacity:0} #livro .rega .gotas{animation:gotas 1s ease-in}
+@keyframes gotas{40%{opacity:1; transform:translate(4px, 0)} 100%{opacity:0; transform:translate(10px, 60px)}}
+#livro .broto{display:none}
+#livro .tio-planta.b0 .broto.b0, #livro .tio-planta.b1 .broto.b1, #livro .tio-planta.b2 .broto.b2, #livro .tio-planta.b3 .broto.b3, #livro .tio-planta.b4 .broto.b4, #livro .tio-planta.b5 .broto.b5{display:inline; animation:vem .5s both}
+#livro .atchim:not(.vem), #livro .chegou:not(.vem), #livro .em-breve-tag:not(.vem){visibility:hidden}
+#livro .voador img{transform:translateY(calc(var(--alto, 0) * -11%)); transition:transform .7s cubic-bezier(.3,1.4,.5,1)}
+#livro .voador.bate-asa img{animation:asa .5s ease-in-out}
+@keyframes asa{50%{scale:1 .9}}
+#livro .escolha{display:flex; flex-direction:column; gap:calc(var(--u)*.8)}
+#livro .escolha button{font-family:"EB Garamond", serif; font-weight:700; font-size:calc(var(--u)*1.7); border:0; border-radius:99px; padding:.4em 1em; cursor:pointer; color:#2b2118; background:#f1dc9a; box-shadow:0 4px 0 #a9823a}
+#livro .escolha button[data-v="comer"]{background:#e8c4c4; box-shadow:0 4px 0 #a96a6a}
+#livro .escolha button:active{transform:translateY(3px); box-shadow:none}
+#livro .resposta{display:block; margin-top:calc(var(--u)*1); background:#fff; color:#3a2a1a; font-family:"IM Fell English", serif; font-style:italic; font-size:calc(var(--u)*1.7); padding:.4em .8em; border-radius:.8em}
+#livro .resposta:not(.vem){visibility:hidden}
+#livro .maca-tent.guardada svg{transition:transform 1s, opacity 1s; transform:translateY(160%) scale(.3); opacity:0}
+#livro .fase{display:none}
+#livro .f0:not(.f1) .fase.f0, #livro .f1:not(.f2) .fase.f1, #livro .f2:not(.f3) .fase.f2, #livro .f3 .fase.f3, #livro .f4 .fase.f4{display:inline}
+#livro .planta-arvore .fase{animation:vem .8s both; transform-box:fill-box; transform-origin:50% 100%}
+#livro .pisca-prata{animation:pisca 1.6s ease-in-out infinite}
+#livro .lampada{animation:halo 2s ease-in-out infinite alternate}
+#livro .seco svg{filter:grayscale(1) brightness(.55)}
+#livro .porta-gr{transition:transform 1.2s cubic-bezier(.4,0,.2,1); transform-box:fill-box}
+#livro .porta-gr.pe{transform-origin:0 50%} #livro .porta-gr.pd{transform-origin:100% 50%}
+#livro .guarda-roupa.aberto .porta-gr{transform:scaleX(.12)}
+#livro .guarda-roupa .neve{position:absolute; left:12%; right:12%; top:8%; bottom:8%; overflow:hidden; pointer-events:none; opacity:0; transition:opacity 1s .6s;
+  background-image:radial-gradient(circle, #fff 0 1.5px, transparent 2px), radial-gradient(circle, #fff 0 1px, transparent 1.5px); background-size:22px 22px, 14px 14px; animation:neva 3s linear infinite}
+#livro .guarda-roupa.aberto .neve{opacity:1}
+@keyframes neva{to{background-position:6px 44px, -4px 28px}}
+
 /* capa: texto à direita, sobre o céu */
 #livro .capa .texto{width:34%}
 
@@ -673,6 +804,10 @@ function monta(h){
   const fim = folhas$[N - 1];
   fim.querySelector(".fim").onclick = () => sumario();
   const px = fim.querySelector(".prox"); if (px) px.onclick = () => abreHistoria(px.dataset.prox);
+  folhas$.forEach(fo => fo.querySelectorAll("[data-acao]").forEach(el => el.addEventListener("pointerdown", e => {
+    const fn = ACOES[el.dataset.acao]; if (!fn) return;
+    e.stopPropagation(); el.classList.add("tocado"); fn(el, e, fo);
+  })));
   folhas$[N - 1].querySelectorAll(".anel.toca").forEach(a => a.addEventListener("pointerdown", e => { e.stopPropagation(); tocaAnel(a, e) }));
   medida();
 }
@@ -800,28 +935,59 @@ function cria(){
   L.querySelector(".lua").onclick = () => { L.classList.toggle("penumbra"); try{ localStorage.setItem("agnespad:penumbra", L.classList.contains("penumbra") ? "1" : "") }catch(e){} };
   try{ if (localStorage.getItem("agnespad:penumbra")) L.classList.add("penumbra") }catch(e){}
 }
-/* sumário: os capítulos como bilhetes de papel na mesa */
+/* estante: os livros da coleção; dentro de cada livro, os capítulos como bilhetes de papel */
 const MINI = {sobrinho1: svg("0 0 100 100", anel("#f2c230", "#a97a10", "m1"), {x: 0, y: 0, w: 100, e: "fade"}),
               sobrinho2: svg("0 0 120 280", tioAndre, {x: 0, y: 0, w: 100, e: "fade"}),
               sobrinho3: svg("0 0 200 80", laguinho, {x: 0, y: 0, w: 100, e: "fade"})};
-function sumario(){
+const LIVROS = [
+  {id: "sobrinho", n: 1, titulo: "O Sobrinho do Mago", cor: "#5a1f2a", caps: HISTORIAS, emblema: anel("#f2c230", "#a97a10", "lv1")},
+  {id: "leao", n: 2, titulo: "O Leão, a Feiticeira e o Guarda-Roupa", cor: "#1f3a5a", emBreve: true,
+   emblema: `<rect x="46" y="20" width="8" height="70" fill="#d9b25a"/><path d="M36 20 h28 l-6 -14 h-16Z" fill="#d9b25a"/><circle cx="50" cy="12" r="6" fill="#ffe08a"/>${[[20, 30], [78, 44], [28, 70], [72, 80], [50, 96]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.6" fill="#fff"/>`).join("")}`}
+];
+const lido = id => { try{ return localStorage.getItem("agnespad:lido:" + id) }catch(e){ return null } };
+const onde = id => { try{ return +localStorage.getItem("agnespad:historia:" + id) || 0 }catch(e){ return 0 } };
+function preparaSumario(){
   if (!L) cria();
   if (typeof show === "function") show("menu");
   if (typeof stopAudio === "function") stopAudio();
   aberto = false; L.classList.add("on", "no-sumario"); L.scrollTop = 0;
-  const lido = id => { try{ return localStorage.getItem("agnespad:lido:" + id) }catch(e){ return null } };
-  const onde = id => { try{ return +localStorage.getItem("agnespad:historia:" + id) || 0 }catch(e){ return 0 } };
-  const S = L.querySelector(".sumario");
-  S.innerHTML = `<div class="sobre">As Crônicas de Nárnia</div><h1>O Sobrinho do Mago</h1>
-    <div class="caps-lista">${HISTORIAS.map((h, i) => `<button class="cap-card" data-id="${h.id}" style="--r:${[-3, 2, -1.5][i % 3]}deg">
-      <div class="mini">${MINI[h.id] || ""}</div><div class="num">Capítulo ${i + 1}</div><div class="nome">${h.curto}</div>
+  return L.querySelector(".sumario");
+}
+function estante(){
+  const S = preparaSumario();
+  S.className = "sumario estante";
+  S.innerHTML = `<div class="sobre">Histórias para dormir</div><h1>As Crônicas de Nárnia</h1>
+    <div class="prateleira">${LIVROS.map(b => {
+      const feitos = b.caps ? b.caps.filter(c => lido(c.id)).length : 0;
+      return `<button class="livro-capa${b.emBreve ? " em-breve" : ""}" data-livro="${b.id}" style="--cor:${b.cor}">
+        <span class="lomb"></span><svg viewBox="0 0 100 100">${b.emblema}</svg>
+        <span class="lv-n">Livro ${b.n}</span><span class="lv-t">${b.titulo}</span>
+        <span class="lv-s">${b.emBreve ? "em breve" : `${b.caps.length} capítulos${feitos ? ` · ${feitos} lidos` : ""}`}</span>
+        ${b.emBreve ? `<span class="carimbo">EM BREVE</span>` : ""}</button>`}).join("")}</div>
+    <div class="chao-estante"></div>`;
+  S.querySelectorAll(".livro-capa").forEach(b => b.onclick = () => {
+    const lv = LIVROS.find(x => x.id === b.dataset.livro);
+    if (lv.emBreve){ b.classList.remove("balanca"); void b.offsetWidth; b.classList.add("balanca"); tom(330, .25, "triangle", .06); return }
+    capitulos(lv.id);
+  });
+}
+function capitulos(livroId){
+  const lv = LIVROS.find(x => x.id === livroId) || LIVROS[0];
+  const S = preparaSumario();
+  S.className = "sumario lista";
+  S.innerHTML = `<button class="voltar-estante">← estante</button><div class="sobre">As Crônicas de Nárnia · Livro ${lv.n}</div><h1>${lv.titulo}</h1>
+    <div class="caps-lista">${lv.caps.map((h, i) => `<button class="cap-card" data-id="${h.id}" style="--r:${[-3, 2, -1.5, 1, -2][i % 5]}deg">
+      <div class="mini">${MINI[h.id] || h.mini || ""}</div><div class="num">Capítulo ${i + 1}</div><div class="nome">${h.curto}</div>
       <div class="selo">${lido(h.id) ? "✓ já lido" : onde(h.id) ? "parou na pág. " + (onde(h.id) + 1) : "novo"}</div></button>`).join("")}</div>`;
   S.querySelectorAll(".peca").forEach(el => { el.style.transform = "none"; el.style.opacity = 1 });
   S.querySelectorAll(".cap-card").forEach(b => b.onclick = () => abreHistoria(b.dataset.id));
+  S.querySelector(".voltar-estante").onclick = estante;
+  const atual = hist && S.querySelector(`.cap-card[data-id="${hist.id}"]`); if (atual) atual.scrollIntoView({block: "center"});
 }
+const sumario = () => capitulos("sobrinho");
 window.abreHistoria = function(id){
   if (!L) cria();
-  if (!id) return sumario();
+  if (!id) return estante();
   if (typeof show === "function") show("menu");
   if (typeof stopAudio === "function") stopAudio();
   const h = HISTORIAS.find(x => x.id === id) || HISTORIAS[0];
@@ -840,6 +1006,22 @@ window.abreHistoria = function(id){
 };
 function fecha(){ aberto = false; if (L) L.classList.remove("on", "no-sumario") }
 window.fechaHistoria = fecha;
+
+/* ---------- sons e brincadeiras (usados pelos capítulos) ---------- */
+function tom(freq, dur = .6, tipo = "sine", vol = .1, quando = 0){
+  try{
+    if (typeof AC === "undefined") return;
+    AC.resume().catch(() => {});
+    const t = AC.currentTime + quando, g = AC.createGain(), o = AC.createOscillator();
+    o.type = tipo; o.frequency.value = freq; o.connect(g); g.connect(master);
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .02); g.gain.exponentialRampToValueAtTime(.0005, t + dur);
+    o.start(t); o.stop(t + dur + .05);
+  }catch(e){}
+}
+const ACOES = {};
+window.Narnia = {DIR, peca, img, svg, tag, anel, vela, estrelas, nuvem, lua, porta, estante: estanteSvg, lareira, poltrona, gaiola, casaVazia, telhadosSil, coracao, colina, folhas,
+  vigas, bandeja, tioAndre, chave, caixaAtl, laguinho, tufo, arvore, bolhas, raios, botoesFim, ACOES, tom, farfalha, MINI,
+  capitulo(c){ HISTORIAS.push(c); if (c.mini) MINI[c.id] = c.mini }};
 
 const bt = document.getElementById("goStory");
 if (bt) bt.onclick = () => abreHistoria();

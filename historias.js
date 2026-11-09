@@ -113,7 +113,7 @@ const colina = `<rect width="200" height="140" fill="#cfe3e6"/><circle cx="160" 
 const folhas = (cor) => `<path d="M10 50 Q30 6 70 10 Q60 50 10 50Z" fill="${cor}"/><path d="M12 48 Q40 30 66 12" stroke="#2f4a22" stroke-width="2" fill="none"/>`;
 const estrelas = () => Array.from({length: 26}, (_, i) => `<i style="left:${(i*37) % 100}%;top:${(i*53) % 62}%;animation-delay:${(i % 7)*.4}s;transform:scale(${.5 + (i % 4)*.25})"></i>`).join("");
 
-const botoesFim = prox => `<div class="botoes"><button class="fim">Boa noite 🌙</button>${prox ? `<button class="prox" data-prox="${prox}">Capítulo ${prox.replace(/\D/g, "")} →</button>` : ""}</div>`;
+const botoesFim = (prox, rotulo) => `<div class="botoes"><button class="fim">Boa noite 🌙</button>${prox ? `<button class="prox" data-prox="${prox}">${rotulo || "Capítulo " + prox.replace(/\D/g, "")} →</button>` : ""}</div>`;
 
 /* ---------- O Sobrinho do Mago · Capítulo 1: A porta errada ---------- */
 const CAP1 = {
@@ -512,7 +512,7 @@ const css = `
 
 /* temas das folhas */
 #livro .t-noite{background:#14214a url(${DIR}papel.jpg); background-blend-mode:multiply; color:#efe3c8}
-#livro .t-noite .texto{color:#ece0c2}
+#livro .t-noite .texto{color:#ece0c2} #livro .t-noite .texto b{color:#ffe08a}
 #livro .t-noite .cena{left:0; top:0; width:62%; height:100%}
 #livro .t-cinza{background-color:#e3ddd0}
 #livro .t-jardim{background-color:#eae6cc}
@@ -755,6 +755,64 @@ const css = `
 #livro .guarda-roupa.aberto .neve{opacity:1}
 @keyframes neva{to{background-position:6px 44px, -4px 28px}}
 
+/* livro 2: neve */
+#livro .t-neve{background:#e9f0f6 url(${DIR}papel.jpg); background-blend-mode:multiply}
+#livro .t-neve .texto{color:#1d2a3a} #livro .t-neve .texto b{color:#2a4a7a}
+#livro .t-neve .cena{left:0; top:0; width:62%; height:100%}
+#livro .t-neve .cena::before{content:""; position:absolute; inset:0; pointer-events:none; z-index:20;
+  background-image:radial-gradient(circle, #fff 0 1.6px, transparent 2.2px), radial-gradient(circle, #fff 0 1px, transparent 1.6px); background-size:38px 38px, 22px 22px; animation:neva 6s linear infinite; opacity:.9}
+#livro .pedra img, #livro .pedra svg{filter:grayscale(1) brightness(1.05) contrast(.85) drop-shadow(0 calc(var(--u)*.4) calc(var(--u)*.5) rgba(0,0,0,.35)); transition:filter 1.4s}
+
+/* livro 2: peças e brincadeiras */
+#livro h1.h1-longo{font-size:calc(var(--u)*3.9); line-height:1.02}
+#livro .neve-cai{position:absolute; inset:0; pointer-events:none; z-index:20; background-image:radial-gradient(circle, #fff 0 1.6px, transparent 2.2px), radial-gradient(circle, #fff 0 1px, transparent 1.6px);
+  background-size:38px 38px, 22px 22px; animation:neva 6s linear infinite; opacity:.85}
+#livro .casaco{transition:transform .9s cubic-bezier(.3,1.2,.5,1); transform-box:fill-box}
+#livro .casaco.c0.aberto, #livro .casaco.c1.aberto{transform:translateX(-140%) rotate(-8deg)}
+#livro .casaco.c2.aberto, #livro .casaco.c3.aberto{transform:translateX(140%) rotate(8deg)}
+#livro .alem{opacity:.25; transition:opacity 1.2s} #livro .revelado .alem{opacity:1}
+#livro .achou:not(.vem), #livro .aviso-manjar:not(.vem), #livro .pedro-vem:not(.vem), #livro .poste-acende:not(.vem){visibility:hidden}
+#livro .aviso-manjar span:empty{display:none}
+#livro .furo{cursor:pointer} #livro .furo.toca circle:last-child{fill:#ffd27a}
+#livro .nota-voa{position:absolute; top:10%; font-size:calc(var(--u)*3.4); color:#7a4a1a; animation:nota-voa 1.6s ease-out forwards; pointer-events:none}
+#livro .t-sala .nota-voa, #livro .t-escuro .nota-voa{color:#ffe08a}
+@keyframes nota-voa{to{transform:translate(calc(var(--u)*3), calc(var(--u)*-14)) rotate(20deg); opacity:0}}
+#livro .chacoalha .sininho{animation:sininho .5s ease-in-out; transform-box:fill-box; transform-origin:50% 0}
+@keyframes sininho{25%{transform:rotate(18deg)} 50%{transform:rotate(-14deg)} 75%{transform:rotate(8deg)}}
+#livro .doce{cursor:pointer; transition:transform .3s, opacity .3s; transform-box:fill-box; transform-origin:center}
+#livro .doce.comido{transform:scale(0); opacity:0}
+#livro .escolha button{text-align:left}
+#livro .pisco-voa img{transform:translate(calc(var(--px, 0%) * 3.6), var(--py, 0%)); transition:transform .9s cubic-bezier(.3,1.3,.5,1)}
+#livro .pesca-peca{position:absolute}
+#livro .conta-peixe{position:absolute; left:6%; top:4%; font-family:"IM Fell English", serif; font-size:calc(var(--u)*2.4); color:#2a4a6a}
+#livro .peixe-pula{position:absolute; left:46%; top:46%; font-size:calc(var(--u)*5); animation:peixe 1.2s ease-out forwards; pointer-events:none}
+@keyframes peixe{40%{transform:translate(calc(var(--u)*4), calc(var(--u)*-14)) rotate(-30deg)} 100%{transform:translate(calc(var(--u)*14), calc(var(--u)*2)) rotate(40deg); opacity:0}}
+#livro .coroa-tr{opacity:0; transition:opacity .4s, transform .6s cubic-bezier(.3,1.6,.5,1); transform:translateY(-20px); transform-box:fill-box}
+#livro .trono{cursor:pointer} #livro .coroado .coroa-tr, #livro .todos-coroados .coroa-tr{opacity:1; transform:none}
+#livro .leao-pedra{position:absolute}
+#livro .leao-pedra .rabiscos{position:absolute; left:18%; top:34%; width:64%; height:auto; filter:none !important}
+#livro .risco{display:none} #livro .rabisco1 .risco.r1, #livro .rabisco2 .risco.r1, #livro .rabisco2 .risco.r2{display:inline}
+#livro .presente{cursor:pointer} #livro .presente .item{opacity:0; transition:opacity .6s .3s}
+#livro .presente .tampa{transition:transform .6s cubic-bezier(.3,1.4,.5,1); transform-box:fill-box}
+#livro .presente.aberto .tampa{transform:translate(30px, -60px) rotate(30deg); opacity:0; transition:transform .6s, opacity .6s .3s}
+#livro .presente.aberto .caixa{opacity:0; transition:opacity .4s .5s} #livro .presente.aberto .item{opacity:1}
+#livro .mancha{cursor:pointer; transition:transform .8s, opacity .8s; transform-box:fill-box; transform-origin:center}
+#livro .mancha.derreteu{transform:scale(.1); opacity:0}
+#livro .ondas-som{opacity:0} #livro .sopra .ondas-som{animation:ondas-som 1.2s ease-out}
+@keyframes ondas-som{30%{opacity:1} 100%{opacity:0; transform:translateX(20px)}}
+#livro .runa{cursor:pointer; transition:fill .5s} #livro .runa.brilha-runa{fill:#ffd84a}
+#livro .coracao-voa{position:absolute; color:#ff7ea0; font-size:calc(var(--u)*3.6); animation:nota-voa 1.5s ease-out forwards; pointer-events:none}
+#livro .corda{cursor:pointer; transition:opacity .6s} #livro .corda.roida{opacity:0}
+#livro .rato{opacity:0} #livro .rato.vem{opacity:1}
+#livro .acorda img{animation:vem .8s both}
+#livro .cervo-corre img{transform:translateX(calc(var(--px, 0%) * 2.6)); transition:transform 1s cubic-bezier(.3,1.2,.5,1)}
+#livro .aviso-papel{font-family:"IM Fell English", serif; font-size:calc(var(--u)*1.9); line-height:1.35; color:#2b2118; text-align:center}
+#livro .enjoado img{filter:hue-rotate(40deg) saturate(.8)}
+#livro .gigante .bicho{font-size:calc(var(--u)*16)}
+#livro .pula img{animation:pula-leao 1.4s ease-in-out infinite}
+@keyframes pula-leao{50%{transform:translateY(-8%) rotate(-3deg)}}
+#livro .vencido img{filter:grayscale(.6) opacity(.6); transform:rotate(10deg)}
+
 /* capa: texto à direita, sobre o céu */
 #livro .capa .texto{width:34%}
 
@@ -941,7 +999,7 @@ const MINI = {sobrinho1: svg("0 0 100 100", anel("#f2c230", "#a97a10", "m1"), {x
               sobrinho3: svg("0 0 200 80", laguinho, {x: 0, y: 0, w: 100, e: "fade"})};
 const LIVROS = [
   {id: "sobrinho", n: 1, titulo: "O Sobrinho do Mago", cor: "#5a1f2a", caps: HISTORIAS, emblema: anel("#f2c230", "#a97a10", "lv1")},
-  {id: "leao", n: 2, titulo: "O Leão, a Feiticeira e o Guarda-Roupa", cor: "#1f3a5a", emBreve: true,
+  {id: "leao", n: 2, titulo: "O Leão, a Feiticeira e o Guarda-Roupa", cor: "#1f3a5a", caps: [],
    emblema: `<rect x="46" y="20" width="8" height="70" fill="#d9b25a"/><path d="M36 20 h28 l-6 -14 h-16Z" fill="#d9b25a"/><circle cx="50" cy="12" r="6" fill="#ffe08a"/>${[[20, 30], [78, 44], [28, 70], [72, 80], [50, 96]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="2.6" fill="#fff"/>`).join("")}`}
 ];
 const lido = id => { try{ return localStorage.getItem("agnespad:lido:" + id) }catch(e){ return null } };
@@ -984,13 +1042,15 @@ function capitulos(livroId){
   S.querySelector(".voltar-estante").onclick = estante;
   const atual = hist && S.querySelector(`.cap-card[data-id="${hist.id}"]`); if (atual) atual.scrollIntoView({block: "center"});
 }
-const sumario = () => capitulos("sobrinho");
+const livroDe = h => LIVROS.find(b => b.caps && b.caps.includes(h)) || LIVROS[0];
+const sumario = () => capitulos(hist ? livroDe(hist).id : "sobrinho");
 window.abreHistoria = function(id){
   if (!L) cria();
   if (!id) return estante();
   if (typeof show === "function") show("menu");
   if (typeof stopAudio === "function") stopAudio();
-  const h = HISTORIAS.find(x => x.id === id) || HISTORIAS[0];
+  const todos = LIVROS.flatMap(b => b.caps || []);
+  const h = todos.find(x => x.id === id) || HISTORIAS[0];
   if (hist !== h) monta(h);
   aberto = true; ultimaPag = -1; L.classList.add("on"); L.classList.remove("no-sumario");
   let pg = 0; try{ pg = +localStorage.getItem("agnespad:historia:" + h.id) || 0 }catch(e){}
@@ -1021,7 +1081,7 @@ function tom(freq, dur = .6, tipo = "sine", vol = .1, quando = 0){
 const ACOES = {};
 window.Narnia = {DIR, peca, img, svg, tag, anel, vela, estrelas, nuvem, lua, porta, estante: estanteSvg, lareira, poltrona, gaiola, casaVazia, telhadosSil, coracao, colina, folhas,
   vigas, bandeja, tioAndre, chave, caixaAtl, laguinho, tufo, arvore, bolhas, raios, botoesFim, ACOES, tom, farfalha, MINI,
-  capitulo(c){ HISTORIAS.push(c); if (c.mini) MINI[c.id] = c.mini }};
+  capitulo(c, livro = "sobrinho"){ (LIVROS.find(b => b.id === livro) || LIVROS[0]).caps.push(c); if (c.mini) MINI[c.id] = c.mini }};
 
 const bt = document.getElementById("goStory");
 if (bt) bt.onclick = () => abreHistoria();

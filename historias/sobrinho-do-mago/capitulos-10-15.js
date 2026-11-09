@@ -150,8 +150,8 @@ const CAP15 = {id: "sobrinho15", curto: "O começo de todas as histórias", mini
   P("noite", `<div class="ceu">${estrelas()}</div>` + svg("0 0 100 200", arvore, {x: 10, y: 10, w: 30, r: 70, e: "cair", t: .0, d: 2}) + svg("0 0 200 290", guardaRoupa, {x: 52, y: 6, w: 34, e: "pop", t: .3, d: 3, z: 3}),
     ["Muitos anos depois, Digory cresceu e virou um professor sábio, de cabelo branco. Numa noite de tempestade, a macieira caiu.", "Ele não quis jogar a madeira fora. Com ela, mandou fazer um <b>guarda-roupa</b>."]),
   P("magia", peca(`<svg viewBox="0 0 200 290">${guardaRoupa}</svg><div class="neve"></div>`, {x: 24, y: 0, w: 42, e: "pop", t: .0, d: 3, z: 3, a: "guardaRoupa", c: "guarda-roupa"}) +
-    tag("Em breve: O Leão, a Feiticeira e o Guarda-Roupa", {x: 4, y: 88, w: 92, r: -1, e: "zoom", t: 1, z: 6, c: "placa em-breve-tag"}),
-    fim(["Um guarda-roupa comum, de madeira... ou será que não?", "Porque, muitos anos depois, quatro crianças iam abrir a porta dele. E aí começaria uma outra aventura.", dica("toque no guarda-roupa para abrir")], "", "Fim de “O Sobrinho do Mago”. 🦁"), {final: true})
+    tag("Próximo livro: O Leão, a Feiticeira e o Guarda-Roupa", {x: 4, y: 88, w: 92, r: -1, e: "zoom", t: 1, z: 6, c: "placa em-breve-tag"}),
+    fim(["Um guarda-roupa comum, de madeira... ou será que não?", "Porque, muitos anos depois, quatro crianças iam abrir a porta dele. E aí começaria uma outra aventura.", dica("toque no guarda-roupa para abrir")], "leao1", "Fim de “O Sobrinho do Mago”. 🦁"), {final: true})
 ]};
 
 [CAP10, CAP11, CAP12, CAP13, CAP14, CAP15].forEach(c => N.capitulo(c));

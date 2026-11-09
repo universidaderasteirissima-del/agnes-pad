@@ -9,7 +9,7 @@ const {peca, img, svg, tag, anel, vela, estrelas, porta, lareira, poltrona, lagu
 const AM = id => anel("#f2c230", "#a97a10", id), VD = id => anel("#3fbf6a", "#1d7a3e", id);
 const P = (tema, cena, ps, extra = {}) => Object.assign({tema, cena, texto: ps.map(p => p.startsWith("<") ? p : `<p>${p}</p>`).join("")}, extra);
 const capa = (n, nome, resumo, cena, tema = "noite") => P(tema, cena, [`<div class="sobre">As Crônicas de Nárnia</div><h1>O Sobrinho<br>do Mago</h1><div class="cap">Capítulo ${n} · ${nome}</div>`, ...resumo, `<div class="dica">role devagarinho para baixo ↓</div>`], {layout: "capa"});
-const fim = (ps, prox, extra) => [...ps, `<div class="continua">${extra || "Continua no próximo capítulo..."}</div>`, botoesFim(prox)];
+const fim = (ps, prox, extra) => [...ps, `<div class="continua">${extra || "Continua no próximo capítulo..."}</div>`, botoesFim(prox, prox && prox.startsWith("leao") ? "Livro 2" : "")];
 const dica = txt => `<div class="dica-toque">✨ ${txt}</div>`;
 const emoji = (e, o) => peca(`<span class="bicho">${e}</span>`, Object.assign({}, o, {c: "emoji " + (o.c || "")}));
 
